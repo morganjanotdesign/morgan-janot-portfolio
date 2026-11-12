@@ -1,0 +1,600 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: #000;
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    width: 100%;
+    min-height: 100%;
+  }
+}
+
+/* Hardware accelerated smooth transformations */
+article {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform, box-shadow;
+}
+
+/* Universal subtle hover zoom on all photos */
+article img,
+section img {
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.6s ease;
+  will-change: transform;
+}
+
+article img:hover,
+section img:hover,
+.group:hover img {
+  transform: scale(1.035);
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  article,
+  article *,
+  svg {
+    transition: opacity 0.25s ease-in-out !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   SECTION PROCESS : GROS TITRE EN PLEINE PAGE & IMAGES DESSOUS
+   ========================================================================== */
+.project-process-section {
+  max-width: 1880px;
+  width: 96%;
+  margin: clamp(100px, 12vw, 180px) auto clamp(70px, 9vw, 130px) auto;
+  padding: 0 clamp(14px, 2.5vw, 36px);
+  box-sizing: border-box;
+}
+
+.process-header {
+  margin-bottom: clamp(36px, 5vw, 64px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 2vw, 24px);
+}
+
+.process-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+body.light-mode .process-eyebrow {
+  color: #777785 !important;
+}
+
+.process-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+/* Gros titre en pleine page : PROCESS */
+.process-giant-title {
+  margin: 0;
+  padding: 0;
+  font-family: "Arial Black", "Impact", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: clamp(64px, 14vw, 180px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  text-transform: uppercase;
+  color: #ffffff;
+  user-select: none;
+}
+body.light-mode .process-giant-title {
+  color: #0d0d11 !important;
+}
+
+.process-lead-text {
+  margin: 0;
+  font-size: clamp(15px, 1.2vw, 18px);
+  font-weight: 300;
+  line-height: 1.7;
+  color: #c4c4cc;
+  max-width: 780px;
+}
+body.light-mode .process-lead-text {
+  color: #4a4a55 !important;
+}
+
+/* ALIGNEMENT AU BAS & JUSTIFICATION DES TEXTES DESCRIPTIFS */
+.p1-showcase-row,
+.photo-detail-row {
+  align-items: end !important;
+}
+.p1-showcase-text,
+.photo-side-text-col {
+  justify-content: flex-end !important;
+}
+.p1-showcase-text p,
+.photo-side-text-col p,
+.photo-side-text-col div,
+.text-justify {
+  text-align: justify !important;
+  text-justify: inter-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+}
+
+.conception-scatter-stage {
+  display: grid;
+  gap: clamp(24px, 3vw, 42px);
+  align-items: center;
+  position: relative;
+  box-sizing: border-box;
+  padding: clamp(16px, 2vw, 32px) 0;
+}
+.conception-scatter-stage.scatter-5 {
+  grid-template-columns: 1fr 1fr 1.05fr;
+}
+.conception-scatter-stage.scatter-2 {
+  grid-template-columns: 1fr 1fr;
+}
+.scatter-col {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3vw, 38px);
+}
+
+.scatter-photo-card {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #121214;
+  border: none !important;
+  outline: none !important;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease;
+  cursor: pointer;
+  will-change: transform;
+}
+.scatter-photo-card.aspect-4-3 {
+  aspect-ratio: 4 / 3;
+}
+.scatter-photo-card.tall-fill {
+  height: 100%;
+  min-height: 380px;
+}
+.scatter-photo-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scatter-photo-card:hover {
+  transform: rotate(0deg) scale(1.07) translateY(-14px) !important;
+  z-index: 40 !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: 0 35px 80px rgba(0, 0, 0, 0.95) !important;
+}
+.scatter-photo-card:hover img {
+  transform: scale(1.02);
+}
+
+.scatter-p01-1 { transform: rotate(-3.2deg) translateY(-8px); }
+.scatter-p01-2 { transform: rotate(2.8deg) translateY(14px); }
+.scatter-p01-3 { transform: rotate(-2.2deg) translateY(-12px); }
+.scatter-p01-4 { transform: rotate(3.5deg) translateY(10px); }
+.scatter-p01-5 { transform: rotate(-1.5deg) translateY(-4px); }
+
+.scatter-p04-1 { transform: rotate(-2.8deg) translateY(-6px); }
+.scatter-p04-2 { transform: rotate(3.2deg) translateY(16px); }
+.scatter-p04-3 { transform: rotate(-3.6deg) translateY(6px); }
+.scatter-p04-4 { transform: rotate(2.2deg) translateY(-10px); }
+.scatter-p04-5 { transform: rotate(-1.2deg) translateY(2px); }
+
+.scatter-p06-1 { transform: rotate(-2.6deg) translateY(-6px); }
+.scatter-p06-2 { transform: rotate(2.8deg) translateY(12px); }
+
+@media (max-width: 900px) {
+  .conception-scatter-stage.scatter-5,
+  .conception-scatter-stage.scatter-2 {
+    grid-template-columns: 1fr !important;
+  }
+  .scatter-photo-card {
+    transform: none !important;
+  }
+  .scatter-photo-card:hover {
+    transform: scale(1.02) !important;
+  }
+}
+
+/* ==========================================================================
+   LIGHT MODE OVERRIDES (REACT & STANDALONE)
+   ========================================================================== */
+body.light-mode {
+  background-color: #f7f7f9 !important;
+  color: #0d0d11 !important;
+}
+
+/* ROULETTE / HERO BANNER : SUPPRESSION DE LA BARRE NOIRE EN MODE CLAIR */
+body.light-mode .hero-banner,
+body.light-mode #hero-banner {
+  background-color: #f7f7f9 !important;
+  background: #f7f7f9 !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+body.light-mode #hero-banner button,
+body.light-mode #hero-banner div,
+body.light-mode #hero-banner span {
+  color: #0d0d11 !important;
+  text-shadow: none !important;
+}
+body.light-mode #hero-banner button {
+  opacity: 0.35 !important;
+}
+body.light-mode #hero-banner button:hover {
+  opacity: 1 !important;
+}
+body.light-mode #hero-banner [class*="drop-shadow"] {
+  filter: none !important;
+}
+
+body.light-mode header {
+  background: rgba(247, 247, 249, 0.95) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+body.light-mode header button,
+body.light-mode header a,
+body.light-mode header span {
+  color: #0d0d11 !important;
+}
+
+body.light-mode aside {
+  background-color: #ffffff !important;
+  color: #0d0d11 !important;
+  border-left-color: rgba(0, 0, 0, 0.1) !important;
+}
+body.light-mode aside [class*="bg-black/30"] {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+  border-top-color: rgba(0, 0, 0, 0.08) !important;
+}
+body.light-mode aside [class*="border-white/10"] {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+body.light-mode aside [class*="text-white/"] {
+  color: #666672 !important;
+}
+
+/* TOUS LES TEXTES EN NOIR DANS LE MODE CLAIR */
+body.light-mode .text-white,
+body.light-mode [class*="text-white"] {
+  color: #0d0d11 !important;
+}
+body.light-mode .text-neutral-100,
+body.light-mode .text-neutral-200,
+body.light-mode .text-neutral-300,
+body.light-mode .text-neutral-400,
+body.light-mode .text-neutral-500 {
+  color: #2b2b36 !important;
+}
+
+body.light-mode .bg-black {
+  background-color: #f7f7f9 !important;
+}
+
+body.light-mode .scatter-photo-card {
+  background-color: #ffffff !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+}
+body.light-mode .scatter-photo-card:hover {
+  border: none !important;
+  outline: none !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07) !important;
+}
+
+/* =============================================================
+   NOUVELLE MISE EN PAGE PROCESS : 2 PHOTOS PAR 2 + ZONE DE TEXTE
+   ============================================================= */
+.process-duo-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(260px, 18vw, 320px);
+  align-items: center;
+  gap: clamp(28px, 3.5vw, 56px);
+  margin-bottom: clamp(70px, 9vw, 130px);
+  width: 100%;
+}
+
+.process-duo-row.reverse {
+  grid-template-columns: clamp(260px, 18vw, 320px) minmax(0, 1fr);
+}
+
+.process-duo-row.reverse .process-duo-photos {
+  order: 2;
+}
+
+.process-duo-row.reverse .process-duo-text-col {
+  order: 1;
+}
+
+.process-duo-photos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(16px, 2vw, 28px);
+  width: 100%;
+}
+
+.process-duo-photos.single-photo {
+  grid-template-columns: 1fr;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.process-photo-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: none !important;
+  transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.process-photo-box.tall {
+  aspect-ratio: 4 / 3;
+}
+
+.process-photo-box:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: none !important;
+}
+
+.process-photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.process-duo-text-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(16px, 2vw, 24px) 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  border-radius: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+.process-step-tag {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 12px;
+}
+
+.process-step-title {
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: #ffffff;
+  margin: 0 0 14px 0;
+}
+
+.process-step-desc {
+  font-size: clamp(14px, 1.1vw, 15.5px);
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0;
+  text-align: justify;
+}
+
+/* Light mode - Sans cadre & ombres hyper légères pour le process */
+body.light-mode .process-photo-box {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+body.light-mode .process-photo-box:hover {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+body.light-mode .process-duo-text-col {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body.light-mode .process-step-tag {
+  color: #71717a !important;
+}
+
+body.light-mode .process-step-title {
+  color: #0d0d11 !important;
+}
+
+body.light-mode .process-step-desc {
+  color: #2b2b32 !important;
+}
+
+@media (max-width: 1024px) {
+  .process-duo-row,
+  .process-duo-row.reverse {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .process-duo-row.reverse .process-duo-photos {
+    order: 1 !important;
+  }
+  .process-duo-row.reverse .process-duo-text-col {
+    order: 2 !important;
+  }
+}
+
+@media (max-width: 580px) {
+  .process-duo-photos {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ==========================================================================
+   SUPPRESSION TOTALE DE TOUTES LES OMBRES EN MODE CLAIR (AUCUNE OMBRE)
+   ========================================================================== */
+body.light-mode,
+body.light-mode * {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+body.light-mode img,
+body.light-mode svg {
+  filter: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+}
+body.light-mode .white-image-box,
+body.light-mode .white-image-box.has-image,
+body.light-mode .white-image-box:hover,
+body.light-mode .process-photo-box,
+body.light-mode .process-photo-box:hover,
+body.light-mode .process-duo-text-col,
+body.light-mode .scatter-photo-card,
+body.light-mode .scatter-photo-card:hover,
+body.light-mode .project-art-frame,
+body.light-mode .project-art-frame:hover,
+body.light-mode .project-frame,
+body.light-mode .project-card:hover .project-frame,
+body.light-mode .atelier-art-frame,
+body.light-mode .contact-stationery-card,
+body.light-mode .image-caption-pill,
+body.light-mode .next-teaser-swatch,
+body.light-mode .sticky-roulette-dropdown,
+body.light-mode .projects-drawer,
+body.light-mode .theme-switch-btn.active {
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+}
+
+/* ==========================================================================
+   SUPPRESSION TOTALE DES CADRES ET FONDS AUTOUR DE TOUTES LES PHOTOS (SANS EXCEPTION)
+   ========================================================================== */
+.white-image-box.has-image,
+.white-image-box.has-image:hover,
+.process-photo-box,
+.process-photo-box:hover,
+.scatter-photo-card,
+.scatter-photo-card:hover,
+.p1-showcase-img-box,
+.p1-showcase-img-box img,
+.photo-detail-row img,
+.project-detail-section img,
+.chair-trans-box,
+.lamp-trans-box,
+.speaker-trans-box,
+.p2-last-photo-box,
+.leo-native-wrap,
+.leo-native-wrap img,
+body.light-mode .white-image-box.has-image,
+body.light-mode .white-image-box.has-image:hover,
+body.light-mode .process-photo-box,
+body.light-mode .process-photo-box:hover,
+body.light-mode .scatter-photo-card,
+body.light-mode .scatter-photo-card:hover,
+body.light-mode .p1-showcase-img-box img,
+body.light-mode .photo-detail-row img,
+body.light-mode .project-detail-section img {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* SUPPRESSION COMPLÈTE DE L'OMBRE POUR LA DERNIÈRE PHOTO DU PROJET 2 (BLA) */
+.p2-last-photo-box,
+.p2-last-photo-box:hover,
+body.light-mode .p2-last-photo-box,
+body.light-mode .p2-last-photo-box:hover {
+  box-shadow: none !important;
+  border: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+.p2-last-photo-box img,
+body.light-mode .p2-last-photo-box img {
+  box-shadow: none !important;
+  filter: none !important;
+  object-fit: contain !important;
+}
+
+/* SUPPRESSION COMPLÈTE DE L'OMBRE EN MODE CLAIR POUR LES ENCEINTES DU PROJET 5 */
+body.light-mode .speaker-trans-box img {
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* SUPPRESSION COMPLÈTE DE L'OMBRE POUR LA PREMIÈRE PHOTO DU PROJET 1 */
+.p1-no-shadow-img,
+.full-screen-image-block .p1-showcase-img-box img {
+  filter: none !important;
+  box-shadow: none !important;
+}
+
+/* UNIFORMISATION TYPOGRAPHIQUE DES PUCES / POINTS SÉPARATEURS DE TITRE */
+.title-bullet {
+  font-size: 0.32em;
+  vertical-align: 0.22em;
+  display: inline-block;
+  line-height: 1;
+  margin: 0 0.15em;
+}
+
+

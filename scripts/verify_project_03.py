@@ -71,4 +71,32 @@ for i in range(1, 7):
     assert len(dom_ps) == fr_count == en_count, f"Mismatch for {pid}: DOM={len(dom_ps)}, FR={fr_count}, EN={en_count}"
     print(f"  {pid}: {len(dom_ps)} DOM p tags == {fr_count} FR items == {en_count} EN items (OK)")
 
+# 5. Check legacy portfolio elements are permanently locked & hidden
+legacy_ids = [
+    'top-bar',
+    'portfolio-bg-year',
+    'project-hover-desc-left',
+    'project-hover-desc-right',
+    'intro-curtain',
+    'projects-drawer',
+    'drawer-overlay',
+    'portfolio-mobile-desc',
+]
+for lid in legacy_ids:
+    m = re.search(r'<[a-zA-Z0-9]+\s+[^>]*id="' + re.escape(lid) + r'"[^>]*>', html_content)
+    assert m is not None, f"Legacy element #{lid} tag not found"
+    tag_str = m.group(0)
+    assert 'hidden' in tag_str and 'display:none !important' in tag_str, f"Legacy element #{lid} is missing inline hidden lock: {tag_str}"
+print(f"Legacy elements inline HTML lock verified for {len(legacy_ids)} IDs (OK)")
+
+assert '#top-bar,' in html_content and 'display: none !important;' in html_content, "Missing global CSS lock for #top-bar and legacy elements"
+print("Global CSS lock for legacy portfolio elements verified (OK)")
+
+# 6. Check index.html == portfolio.html and no base64 WebP bloat
+with open('index.html', 'r', encoding='utf-8') as f_idx:
+    index_content = f_idx.read()
+assert html_content == index_content, "index.html and portfolio.html are out of sync!"
+assert 'data:image/webp;base64,' not in html_content, "Found unoptimized base64 WebP data URI in HTML!"
+print("index.html and portfolio.html sync + external WebP optimization verified (OK)")
+
 print("ALL VERIFICATIONS PASSED PERFECTLY!")

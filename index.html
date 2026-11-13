@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="fr" class="light-mode">
+<html lang="fr" class="light-mode is-home-page">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="format-detection" content="telephone=no">
   <title>MORGAN JANOT — Portfolio & Direction Artistique</title>
   <meta name="description" content="Direction artistique, scénographie contemporaine et mobilier éditorial par Morgan Janot.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231bff00'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-weight='700' font-size='34' fill='%23000000'%3ET%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     @font-face {
       font-family: "Thutiya";
@@ -2767,14 +2771,26 @@
       opacity: 0.5;
     }
 
-    /* Accessibility focus */
+    /* Accessibility focus (high contrast on white & #1bff00 surfaces) */
     .brand-title:focus-visible,
     .top-icon-menu:focus-visible,
     .roulette-item:focus-visible,
     .btn-back-portfolio:focus-visible,
-    .contact-big-email:focus-visible {
-      outline: 3px solid #ffffff;
-      outline-offset: 4px;
+    .contact-big-email:focus-visible,
+    .tonaj-home-link:focus-visible,
+    .tonaj-home-center-box:focus-visible,
+    .tonaj-lang-btn:focus-visible,
+    .project-card:focus-visible,
+    .tonaj-carousel-arrow:focus-visible,
+    .tonaj-social-link:focus-visible,
+    .tonaj-contact-huge-link:focus-visible,
+    .tonaj-form-input:focus-visible,
+    .tonaj-form-textarea:focus-visible,
+    .tonaj-form-submit-btn:focus-visible,
+    .proj-next-link:focus-visible,
+    .tonaj-copy-email-btn:focus-visible {
+      outline: 2px solid #000000 !important;
+      outline-offset: 3px !important;
     }
 
     /* =============================================================
@@ -5470,6 +5486,7 @@
       display: none !important;
     }
 
+    html.view-is-portfolio:not(.is-project-page):not(.is-home-page),
     html:has(body.view-is-portfolio:not(.is-project-page):not(.is-home-page)),
     body.view-is-portfolio:not(.is-project-page):not(.is-home-page) {
       overflow: hidden !important;
@@ -5494,7 +5511,7 @@
     body.view-is-portfolio:not(.is-project-page):not(.is-home-page) .page-content-wrapper {
       position: fixed !important;
       inset: 0 !important;
-      width: 100vw !important;
+      width: 100% !important;
       height: 100vh !important;
       height: 100dvh !important;
       background: #ffffff !important;
@@ -5507,7 +5524,7 @@
     #view-portfolio.view-panel.is-active {
       position: fixed !important;
       inset: 0 !important;
-      width: 100vw !important;
+      width: 100% !important;
       height: 100vh !important;
       height: 100dvh !important;
       background: #ffffff !important;
@@ -5811,6 +5828,7 @@
       --proj-title-left: 81.2vw;
     }
 
+    html.is-project-page,
     html:has(body.is-project-page),
     body.is-project-page {
       background: #ffffff !important;
@@ -5837,7 +5855,7 @@
     }
 
     body.is-project-page .page-content-wrapper {
-      width: 100vw !important;
+      width: 100% !important;
       max-width: none !important;
       margin: 0 !important;
       padding: 0 !important;
@@ -5847,7 +5865,7 @@
 
     .project-detail-section {
       position: relative !important;
-      width: 100vw !important;
+      width: 100% !important;
       max-width: none !important;
       min-height: 100vh !important;
       margin: 0 !important;
@@ -5862,7 +5880,7 @@
       position: fixed !important;
       top: 0 !important;
       left: 0 !important;
-      width: 100vw !important;
+      width: 100% !important;
       height: clamp(42px, 4.2vw, 62px) !important;
       background: rgba(255, 255, 255, 0.94) !important;
       backdrop-filter: blur(8px) !important;
@@ -6408,12 +6426,13 @@
     }
 
     .tonaj-about-passions-text {
-      font-family: "Plus Jakarta Sans", "Helvetica Neue", sans-serif;
+      font-family: "Plus Jakarta Sans", "Helvetica Neue", "Segoe UI", system-ui, sans-serif;
       font-size: clamp(8.5px, 0.8vw, 10px);
       line-height: 1.35;
       color: #000000;
       margin: 0;
-      word-break: break-all;
+      overflow-wrap: break-word;
+      word-break: normal;
       opacity: 0.9;
     }
 
@@ -6963,14 +6982,24 @@
       overflow: hidden !important;
     }
 
-    /* Garantir le fond blanc pur et texte noir sur ABOUT et CONTACT comme sur HOME et WORK */
+    /* Garantir le fond blanc pur et texte noir sur HOME, WORK, ABOUT et CONTACT sur tout navigateur (Edge, Firefox, Chrome, Safari) */
+    html.is-home-page,
+    html.view-is-portfolio:not(.is-project-page),
+    html.view-is-about,
     html:has(body.view-is-about),
     body.view-is-about,
+    html.view-is-contact,
     html:has(body.view-is-contact),
     body.view-is-contact {
       background: #ffffff !important;
       background-color: #ffffff !important;
       color: #000000 !important;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      overflow-x: hidden;
     }
 
     /* ==========================================================================
@@ -7021,25 +7050,88 @@
        3. PAGE D'ACCUEIL (#tonaj-home-page) — ADAPTATION ÉCRANS COURTS & MOBILES
        ========================================================================== */
     .tonaj-home-center-box {
+      max-height: calc(100vh - 140px) !important;
       max-height: calc(100dvh - 140px) !important;
     }
 
     @media (max-width: 680px) {
       .tonaj-home-center-box {
+        width: min(82vw, 360px, calc(44vh * 433 / 168)) !important;
         width: min(82vw, 360px, calc(44dvh * 433 / 168)) !important;
       }
     }
 
     /* ==========================================================================
-       4. PAGE WORK / PORTFOLIO (#view-portfolio) — RESPONSIVE TABLETTE & MOBILE
+       4. PAGE WORK / PORTFOLIO (#view-portfolio) — RESPONSIVE & CONTRÔLES UNIVERSELS
        ========================================================================== */
+    #view-portfolio .frames-grid .project-card:focus-visible {
+      outline: 2.5px solid #000000 !important;
+      outline-offset: 4px !important;
+    }
+
+    .tonaj-carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(0, 0, 0, 0.16);
+      color: #000000;
+      font-family: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 45;
+      opacity: 0.55;
+      transition: opacity 180ms ease, background-color 180ms ease, border-color 180ms ease;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .tonaj-carousel-arrow:hover,
+    .tonaj-carousel-arrow:focus-visible {
+      opacity: 1;
+      background: #1bff00;
+      border-color: #000000;
+    }
+
+    .tonaj-carousel-arrow--prev {
+      left: clamp(10px, 2.2vw, 28px);
+    }
+
+    .tonaj-carousel-arrow--next {
+      right: clamp(10px, 2.2vw, 28px);
+    }
+
     @media (max-width: 680px) {
       #view-portfolio .portfolio-section {
+        --carousel-card-size: min(52vw, 210px, 29vh) !important;
         --carousel-card-size: min(52vw, 210px, 29dvh) !important;
         --carousel-stage-w: calc(var(--carousel-card-size) * 501 / 166) !important;
         top: 35% !important;
         left: 50% !important;
         transform: translate(-50%, -50%) !important;
+      }
+
+      .tonaj-carousel-arrow {
+        top: 35%;
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+        opacity: 0.72;
+      }
+
+      .tonaj-carousel-arrow--prev {
+        left: 8px;
+      }
+
+      .tonaj-carousel-arrow--next {
+        right: 8px;
       }
 
       #view-portfolio .frames-grid .mosaic-cartouche {
@@ -7077,6 +7169,7 @@
         top: auto !important;
         bottom: 54px !important;
         left: 18px !important;
+        font-size: min(12vh, 18.5vw) !important;
         font-size: min(12dvh, 18.5vw) !important;
         line-height: 0.82 !important;
       }
@@ -7095,22 +7188,139 @@
 
     /* ==========================================================================
        5. PAGES ABOUT (#view-about) & CONTACT (#view-contact)
-          Fidélité stricte à la maquette sur Desktop (> 960px) + Ordre propre sur Mobile (<= 960px)
+          Fidélité stricte à la maquette sur Desktop (> 960px) + Adaptation Windows DPI 125%/150%
        ========================================================================== */
     @media (min-width: 961px) {
       /* Empêcher l'email et le téléphone de se toucher sur les écrans intermédiaires (961px - 1200px) */
       .tonaj-contact-huge-link {
-        font-size: clamp(17.5px, 2.95vw, 36px) !important;
+        font-size: clamp(17.5px, 2.85vw, 36px) !important;
       }
 
-      /* Sur écrans très peu hauts (< 680px de hauteur), ajuster le padding-top du formulaire Contact */
-      @media (max-height: 680px) {
+      /* Adaptation écrans PC portables Windows avec mise à l'échelle 125% / 150% (~1280x620 - 1366x680) */
+      @media (max-height: 740px) {
+        .tonaj-work-heading {
+          top: 71.5% !important;
+          font-size: min(19vh, 15.6vw) !important;
+        }
+        .tonaj-work-active-desc {
+          top: 71.5% !important;
+        }
+        .tonaj-about-green-block {
+          top: 10.5vh !important;
+          height: 66vh !important;
+        }
+        .tonaj-about-manifesto {
+          top: 15.5vh !important;
+          width: clamp(360px, 51vw, 560px) !important;
+        }
+        .tonaj-about-manifesto p {
+          font-size: clamp(9.5px, 1.35vh, 11px) !important;
+          line-height: 1.32 !important;
+          margin-bottom: clamp(5px, 0.9vh, 8px) !important;
+        }
+        .tonaj-about-right-col {
+          top: 11.5vh !important;
+          width: min(26%, calc(42vh * 274 / 345)) !important;
+        }
+        .tonaj-about-name {
+          font-size: clamp(20px, 3.6vh, 32px) !important;
+        }
+        .tonaj-about-subheading {
+          font-size: clamp(18px, 3.1vh, 28px) !important;
+        }
+        .tonaj-about-giant-title-wrapper {
+          top: 71.5% !important;
+        }
+        .tonaj-about-giant-title {
+          font-size: min(19vh, 15.6vw) !important;
+        }
         .tonaj-contact-green-block {
-          padding-top: clamp(70px, 16vh, 130px) !important;
+          height: 82vh !important;
+          padding-top: clamp(68px, 14vh, 120px) !important;
         }
         .tonaj-form-textarea {
-          height: clamp(54px, 10vh, 84px) !important;
+          height: clamp(54px, 10.5vh, 86px) !important;
         }
+        .tonaj-contact-huge-link {
+          top: 59vh !important;
+          font-size: clamp(17px, 2.75vw, 32px) !important;
+        }
+        .tonaj-contact-giant-title-wrapper {
+          top: 71.5% !important;
+        }
+        .tonaj-contact-giant-title {
+          font-size: min(19vh, 15.6vw) !important;
+        }
+        .tonaj-contact-social-links {
+          top: 79.5vh !important;
+        }
+      }
+    }
+
+    /* Sécurité anti-superposition sur fenêtres très courtes (ex: téléphone paysage ou PC split-screen <= 540px de hauteur) */
+    @media (max-height: 540px) {
+      #tonaj-home-page .tonaj-home-center-box {
+        width: min(50vw, 280px, calc(38vh * 433 / 168)) !important;
+      }
+      #view-portfolio .portfolio-section {
+        --carousel-stage-w: min(58vw, calc(34vh * 501 / 166)) !important;
+        --carousel-card-size: calc(var(--carousel-stage-w) * 166 / 501) !important;
+        top: 42% !important;
+      }
+      .tonaj-carousel-arrow {
+        top: 42% !important;
+      }
+      .tonaj-work-heading {
+        top: auto !important;
+        bottom: 36px !important;
+        font-size: min(16vh, 14vw) !important;
+      }
+      .tonaj-work-active-desc {
+        top: auto !important;
+        bottom: 42px !important;
+      }
+      .tonaj-about-stage,
+      .tonaj-contact-stage {
+        height: auto !important;
+        min-height: 100vh !important;
+        overflow: visible !important;
+        padding-top: 64px !important;
+        padding-bottom: 48px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+      }
+      .tonaj-about-green-block {
+        display: none !important;
+      }
+      .tonaj-about-manifesto,
+      .tonaj-about-right-col,
+      .tonaj-about-giant-title-wrapper,
+      .tonaj-contact-green-block,
+      .tonaj-contact-huge-link,
+      .tonaj-contact-giant-title-wrapper,
+      .tonaj-contact-social-links {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        width: 92% !important;
+        max-width: 760px !important;
+        margin: 0 auto 16px auto !important;
+      }
+      .tonaj-contact-green-block {
+        height: auto !important;
+        padding: 24px 5% !important;
+      }
+      .tonaj-about-view .tonaj-home-lang,
+      .tonaj-about-view .tonaj-home-city,
+      .tonaj-contact-view .tonaj-home-lang,
+      .tonaj-contact-view .tonaj-home-city {
+        position: relative !important;
+        left: 4% !important;
+        right: auto !important;
+        bottom: auto !important;
+        margin: 8px 0 !important;
       }
     }
 
@@ -7125,6 +7335,25 @@
       .tonaj-about-giant-title-wrapper {
         order: 3 !important;
       }
+    }
+
+    .tonaj-copy-email-btn {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 2px 7px;
+      font-family: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      color: #000000;
+      background: #ffffff;
+      border: 1px solid #000000;
+      cursor: pointer;
+      vertical-align: middle;
+    }
+
+    .tonaj-copy-email-btn:hover {
+      background: #000000;
+      color: #1bff00;
     }
 
     /* ==========================================================================
@@ -7678,6 +7907,9 @@
           </div>
         </div>
       </section>
+
+      <button type="button" class="tonaj-carousel-arrow tonaj-carousel-arrow--prev" id="carousel-prev-btn" aria-label="Projet précédent">&#8249;</button>
+      <button type="button" class="tonaj-carousel-arrow tonaj-carousel-arrow--next" id="carousel-next-btn" aria-label="Projet suivant">&#8250;</button>
 
       <h1 class="tonaj-work-heading">WORK</h1>
 
@@ -9110,6 +9342,15 @@
         });
       }
 
+      function syncRootStateClasses() {
+        const root = document.documentElement;
+        if (!root || !pageBody) return;
+        const stateClasses = ['is-home-page', 'view-is-portfolio', 'view-is-about', 'view-is-contact', 'is-project-page'];
+        stateClasses.forEach(function(cls) {
+          root.classList.toggle(cls, pageBody.classList.contains(cls));
+        });
+      }
+
       function revealPanel(targetKey, options) {
         const shouldAnimate = Boolean(
           options &&
@@ -9151,7 +9392,8 @@
           }
           playWorkToHomeMorph(currentStripRect, function() {
             pageBody.classList.add('is-home-page');
-            pageBody.classList.remove('view-is-portfolio', 'is-project-page', 'is-scrolled');
+            pageBody.classList.remove('view-is-portfolio', 'view-is-about', 'view-is-contact', 'is-project-page', 'is-scrolled');
+            syncRootStateClasses();
             document.querySelectorAll('.view-panel').forEach(function(p) {
               p.classList.remove('is-active');
               p.style.display = 'none';
@@ -9167,7 +9409,8 @@
 
         if (isHome) {
           pageBody.classList.add('is-home-page');
-          pageBody.classList.remove('view-is-portfolio', 'is-project-page', 'is-scrolled');
+          pageBody.classList.remove('view-is-portfolio', 'view-is-about', 'view-is-contact', 'is-project-page', 'is-scrolled');
+          syncRootStateClasses();
           document.querySelectorAll('.view-panel').forEach(function(p) {
             p.classList.remove('is-active');
             p.style.display = 'none';
@@ -9223,6 +9466,7 @@
             stickyTitle.textContent = '* ' + targetKey.toUpperCase() + ' *';
           }
         }
+        syncRootStateClasses();
 
         document.querySelectorAll('.view-panel').forEach(function(p) {
           p.classList.remove('is-active');
@@ -9980,10 +10224,12 @@
 
       // ANIMATION DE ROULEMENT MÉCANIQUE À L'ARRIVÉE SUR LA PAGE WORK (ROULETTE PROJET)
       function playRouletteArrivalRoll(targetIndex, customOffset) {
+        const N = CAROUSEL_PROJECT_IDS.length;
+        const target = (typeof targetIndex === 'number') ? targetIndex : 0;
         if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          snapCarouselToIndex(target, 0);
           return;
         }
-        const N = CAROUSEL_PROJECT_IDS.length;
         if (!framesGrid || N === 0) return;
 
         // Attendre que les dimensions du layout soient calculées si premier chargement
@@ -9999,7 +10245,6 @@
 
         isArrivalRolling = true;
 
-        const target = (typeof targetIndex === 'number') ? targetIndex : 0;
         const normTarget = ((target % N) + N) % N;
         const targetProjId = CAROUSEL_PROJECT_IDS[normTarget];
 
@@ -10042,51 +10287,54 @@
         return carouselProgress;
       };
 
-      // Gestion des interactions sur les cartes (Clic & Touches)
-      carouselCards.forEach(function(card) {
-        const pId = card.getAttribute('data-project-id');
+      // Gestion universelle des interactions sur les cartes (Souris Windows/Mac, Trackpad, Tactile & Clavier)
+      const DRAG_ACTIVATION_THRESHOLD_PX = 12;
+      let pointerDownCard = null;
+      let pointerDownTime = 0;
+      let lastCardActivationTime = 0;
 
-        card.addEventListener('click', function() {
-          if (Date.now() < suppressClickUntil || dragTotalDistance > 6) {
+      function activateCarouselCard(card) {
+        if (!card) return;
+        const now = Date.now();
+        if (now - lastCardActivationTime < 80) return;
+        lastCardActivationTime = now;
+
+        const pId = card.getAttribute('data-project-id') || card.id;
+        if (!pId) return;
+
+        cancelArrivalRoll();
+
+        const cardIdx = CAROUSEL_PROJECT_IDS.indexOf(pId);
+        if (cardIdx === -1) return;
+
+        const N = CAROUSEL_PROJECT_IDS.length;
+        const d = wrapDelta(cardIdx - carouselProgress, N);
+
+        if (card.classList.contains('is-carousel-center') || Math.abs(d) < 0.45) {
+          clearHoverDescription();
+          if (typeof showProjectDetail === 'function') {
+            showProjectDetail(pId);
+          }
+        } else {
+          carouselTargetProgress = carouselProgress + d;
+          startPhysics();
+        }
+      }
+
+      carouselCards.forEach(function(card) {
+        card.addEventListener('click', function(e) {
+          if (Date.now() < suppressClickUntil) {
             return;
           }
-
-          cancelArrivalRoll();
-
-          const cardIdx = CAROUSEL_PROJECT_IDS.indexOf(pId);
-          if (cardIdx === -1) return;
-
-          const N = CAROUSEL_PROJECT_IDS.length;
-          let d = wrapDelta(cardIdx - carouselProgress, N);
-
-          if (Math.abs(d) < 0.38) {
-            clearHoverDescription();
-            if (typeof showProjectDetail === 'function') {
-              showProjectDetail(pId);
-            }
-          } else {
-            carouselTargetProgress = carouselProgress + d;
-            startPhysics();
-          }
+          e.stopPropagation();
+          pointerDownCard = null;
+          activateCarouselCard(card);
         });
 
         card.addEventListener('keydown', function(e) {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            cancelArrivalRoll();
-            const cardIdx = CAROUSEL_PROJECT_IDS.indexOf(pId);
-            if (cardIdx === -1) return;
-            const N = CAROUSEL_PROJECT_IDS.length;
-            let d = wrapDelta(cardIdx - carouselProgress, N);
-
-            if (Math.abs(d) < 0.38) {
-              if (typeof showProjectDetail === 'function') {
-                showProjectDetail(pId);
-              }
-            } else {
-              carouselTargetProgress = carouselProgress + d;
-              startPhysics();
-            }
+            activateCarouselCard(card);
           }
         });
 
@@ -10109,10 +10357,33 @@
         });
       });
 
-      // Glisser-déposer tactile & souris (Pointer Events avec contact direct 1:1 et projection d'inertie)
+      // Glisser-déposer tactile & souris : NE PAS appeler setPointerCapture avant un vrai glissement > 12px
+      // (sinon Chromium/Edge/Firefox sur Windows redirigent l'événement 'click' vers .frames-grid et bloquent le clic sur les projets)
       if (framesGrid) {
+        let activePointerId = null;
+        let isActivelyDragging = false;
+        let dragAnchorX = 0;
+
+        framesGrid.addEventListener('dragstart', function(e) {
+          e.preventDefault();
+        });
+
+        // Filet de sécurité si le curseur quitte de 2px une carte entre pointerdown et click
+        framesGrid.addEventListener('click', function(e) {
+          if (Date.now() < suppressClickUntil) return;
+          const hitCard = (e.target && e.target.closest) ? e.target.closest('.project-card') : null;
+          const fallbackCard = hitCard || ((Date.now() - pointerDownTime < 450) ? pointerDownCard : null);
+          pointerDownCard = null;
+          if (fallbackCard) {
+            activateCarouselCard(fallbackCard);
+          }
+        });
+
         framesGrid.addEventListener('pointerdown', function(e) {
           if (!pageBody || !pageBody.classList.contains('view-is-portfolio') || pageBody.classList.contains('is-project-page') || pageBody.classList.contains('is-home-page')) {
+            return;
+          }
+          if (e.pointerType === 'mouse' && e.button !== 0) {
             return;
           }
 
@@ -10120,32 +10391,55 @@
           stopPhysics();
 
           isDragging = true;
+          isActivelyDragging = false;
+          activePointerId = e.pointerId;
           dragStartX = e.clientX;
+          dragStartY = e.clientY;
+          dragAnchorX = e.clientX;
           dragStartProgress = carouselProgress;
           dragTotalDistance = 0;
           carouselVelocity = 0;
+          pointerDownTime = Date.now();
+          pointerDownCard = (e.target && e.target.closest) ? e.target.closest('.project-card') : null;
 
           const now = performance.now();
           pointerHistory = [{ x: e.clientX, t: now }];
-
-          framesGrid.classList.add('is-dragging');
-          try {
-            framesGrid.setPointerCapture(e.pointerId);
-          } catch (err) {}
         });
 
-        framesGrid.addEventListener('pointermove', function(e) {
+        window.addEventListener('pointermove', function(e) {
           if (!isDragging) return;
+          if (activePointerId !== null && e.pointerId !== activePointerId) return;
+          if (e.pointerType === 'mouse' && typeof e.buttons === 'number' && (e.buttons & 1) === 0) {
+            handlePointerEnd(e);
+            return;
+          }
 
           const now = performance.now();
-          const dx = e.clientX - dragStartX;
-          dragTotalDistance = Math.max(dragTotalDistance, Math.abs(dx));
+          const dxFromStart = e.clientX - dragStartX;
+          const dyFromStart = e.clientY - dragStartY;
+          const movedDist = Math.hypot(dxFromStart, dyFromStart);
+          dragTotalDistance = Math.max(dragTotalDistance, movedDist);
+
+          if (!isActivelyDragging) {
+            if (dragTotalDistance <= DRAG_ACTIVATION_THRESHOLD_PX) {
+              return;
+            }
+            isActivelyDragging = true;
+            dragAnchorX = e.clientX;
+            dragStartProgress = carouselProgress;
+            pointerDownCard = null;
+            framesGrid.classList.add('is-dragging');
+            try {
+              framesGrid.setPointerCapture(e.pointerId);
+            } catch (err) {}
+          }
 
           pointerHistory.push({ x: e.clientX, t: now });
           while (pointerHistory.length > 1 && (now - pointerHistory[0].t) > 90) {
             pointerHistory.shift();
           }
 
+          const dx = e.clientX - dragAnchorX;
           const cardSize = getComputedCardSize();
           const stepSize = cardSize * 0.728; // Alignement physique 1:1 avec le pas de décalage inter-cartes
           const progressDelta = -(dx / stepSize);
@@ -10157,21 +10451,33 @@
 
         function handlePointerEnd(e) {
           if (!isDragging) return;
+          if (e && activePointerId !== null && typeof e.pointerId === 'number' && e.pointerId !== activePointerId) return;
+
+          const wasRealDrag = isActivelyDragging;
           isDragging = false;
+          isActivelyDragging = false;
+          activePointerId = null;
+          dragTotalDistance = 0;
           framesGrid.classList.remove('is-dragging');
 
-          try {
-            if (framesGrid.hasPointerCapture(e.pointerId)) {
-              framesGrid.releasePointerCapture(e.pointerId);
-            }
-          } catch (err) {}
-
-          if (dragTotalDistance > 6) {
-            suppressClickUntil = Date.now() + 140;
+          if (e && typeof e.pointerId === 'number') {
+            try {
+              if (framesGrid.hasPointerCapture(e.pointerId)) {
+                framesGrid.releasePointerCapture(e.pointerId);
+              }
+            } catch (err) {}
           }
 
+          if (!wasRealDrag) {
+            return;
+          }
+
+          suppressClickUntil = Date.now() + 200;
+
           const now = performance.now();
-          pointerHistory.push({ x: e.clientX, t: now });
+          if (e && typeof e.clientX === 'number') {
+            pointerHistory.push({ x: e.clientX, t: now });
+          }
           while (pointerHistory.length > 1 && (now - pointerHistory[0].t) > 90) {
             pointerHistory.shift();
           }
@@ -10201,11 +10507,34 @@
           startPhysics();
         }
 
-        framesGrid.addEventListener('pointerup', handlePointerEnd);
-        framesGrid.addEventListener('pointercancel', handlePointerEnd);
+        window.addEventListener('pointerup', handlePointerEnd);
+        window.addEventListener('pointercancel', handlePointerEnd);
+        window.addEventListener('blur', function() {
+          if (isDragging) {
+            handlePointerEnd();
+          }
+        });
       }
 
-      // Navigation fluide au trackpad et à la molette (avec détection de cran vs défilement continu)
+      // Boutons Précédent / Suivant accessibles (souris, tactile, lecteur d'écran)
+      const prevArrowBtn = document.getElementById('carousel-prev-btn');
+      const nextArrowBtn = document.getElementById('carousel-next-btn');
+      if (prevArrowBtn) {
+        prevArrowBtn.addEventListener('click', function() {
+          cancelArrivalRoll();
+          carouselTargetProgress = Math.round(carouselTargetProgress) - 1;
+          startPhysics();
+        });
+      }
+      if (nextArrowBtn) {
+        nextArrowBtn.addEventListener('click', function() {
+          cancelArrivalRoll();
+          carouselTargetProgress = Math.round(carouselTargetProgress) + 1;
+          startPhysics();
+        });
+      }
+
+      // Navigation fluide au trackpad et à la molette (toutes plateformes : Windows Edge/Firefox/Chrome, macOS, Linux)
       const portfolioViewEl = document.getElementById('view-portfolio');
       if (portfolioViewEl) {
         let wheelDebounceTimer = null;
@@ -10214,6 +10543,10 @@
 
         portfolioViewEl.addEventListener('wheel', function(e) {
           if (!pageBody || !pageBody.classList.contains('view-is-portfolio') || pageBody.classList.contains('is-project-page') || pageBody.classList.contains('is-home-page')) {
+            return;
+          }
+          // Ne pas bloquer le zoom navigateur (Ctrl/Pinch + molette sur PC/Edge/Chrome/Firefox)
+          if (e.ctrlKey) {
             return;
           }
 
@@ -10225,7 +10558,14 @@
           const dt = Math.max(1, now - wheelLastTime);
           wheelLastTime = now;
 
-          const rawDelta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+          // Normaliser deltaMode (Firefox Windows utilise deltaMode === 1 en lignes)
+          let scale = 1;
+          if (e.deltaMode === 1) scale = 36;
+          else if (e.deltaMode === 2) scale = window.innerHeight || 800;
+
+          const normX = e.deltaX * scale;
+          const normY = e.deltaY * scale;
+          const rawDelta = Math.abs(normX) > Math.abs(normY) ? normX : normY;
 
           // Détection d'un cran discret de molette de souris (grand saut isolé)
           if (Math.abs(rawDelta) >= 45 && dt > 75) {
@@ -10710,6 +11050,7 @@
       (function initContactForm() {
         const contactForm = document.getElementById('contact-form');
         if (!contactForm) return;
+        const recipientEmail = 'morganjanot.design@gmail.com';
 
         contactForm.addEventListener('submit', function(e) {
           e.preventDefault();
@@ -10726,15 +11067,34 @@
             'Message :\n' + message
           );
 
+          const isEn = (document.documentElement.lang === 'en');
           const statusEl = document.getElementById('contact-form-status');
           if (statusEl) {
             statusEl.style.display = 'block';
-            statusEl.textContent = (document.documentElement.lang === 'en')
-              ? 'Opening mail client...'
-              : 'Ouverture de votre messagerie...';
+            statusEl.textContent = isEn
+              ? 'Opening mail client (' + recipientEmail + ') '
+              : 'Ouverture de la messagerie (' + recipientEmail + ') ';
+
+            const copyBtn = document.createElement('button');
+            copyBtn.type = 'button';
+            copyBtn.className = 'tonaj-copy-email-btn';
+            copyBtn.textContent = isEn ? 'Copy email' : 'Copier l’email';
+            copyBtn.addEventListener('click', function() {
+              const finishCopy = function() {
+                copyBtn.textContent = isEn ? 'Copied!' : 'Copié !';
+              };
+              if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(recipientEmail).then(finishCopy).catch(function() {
+                  window.prompt(isEn ? 'Copy email address:' : 'Copier l’adresse :', recipientEmail);
+                });
+              } else {
+                window.prompt(isEn ? 'Copy email address:' : 'Copier l’adresse :', recipientEmail);
+              }
+            });
+            statusEl.appendChild(copyBtn);
           }
 
-          window.location.href = 'mailto:morganjanot.design@gmail.com?subject=' + subject + '&body=' + body;
+          window.location.href = 'mailto:' + recipientEmail + '?subject=' + subject + '&body=' + body;
         });
       })();
 

@@ -696,14 +696,16 @@
       mix-blend-mode: overlay;
     }
 
-    .drawer-preview-thumb svg {
+    .drawer-preview-thumb svg,
+    .drawer-preview-thumb img {
       width: 100%;
       height: 100%;
       object-fit: contain;
       transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .drawer-project-link:hover .drawer-preview-thumb svg {
+    .drawer-project-link:hover .drawer-preview-thumb svg,
+    .drawer-project-link:hover .drawer-preview-thumb img {
       transform: scale(1.12);
     }
 
@@ -1114,7 +1116,8 @@
       transform: translate3d(0, 0, 0);
     }
 
-    .frame-illustration svg {
+    .frame-illustration svg,
+    .frame-illustration img {
       width: 100%;
       height: 100%;
       max-width: 100%;
@@ -1129,8 +1132,11 @@
     }
 
     .project-card:hover .frame-illustration svg,
+    .project-card:hover .frame-illustration img,
     .project-card:focus-visible .frame-illustration svg,
-    .project-card.is-active .frame-illustration svg {
+    .project-card:focus-visible .frame-illustration img,
+    .project-card.is-active .frame-illustration svg,
+    .project-card.is-active .frame-illustration img {
       transform: scale(1.08);
     }
 
@@ -2784,6 +2790,7 @@
     .tonaj-carousel-arrow:focus-visible,
     .tonaj-social-link:focus-visible,
     .tonaj-contact-huge-link:focus-visible,
+    .tonaj-contact-direct-link:focus-visible,
     .tonaj-form-input:focus-visible,
     .tonaj-form-textarea:focus-visible,
     .tonaj-form-submit-btn:focus-visible,
@@ -5329,33 +5336,91 @@
       left: 83.105%;
     }
 
-    /* Rectangle central vert fluo (#1bff00) & logo Tonaj (#19a400) */
+    /* Centre accueil : logo Tonaj noir + 3 points de chargement */
     .tonaj-home-center-box {
       position: absolute;
       left: 50%;
-      top: 50%;
+      top: 51.5%;
       transform: translate(-50%, -50%);
-      width: min(42.285vw, calc(26vh * 433 / 168));
-      aspect-ratio: 433 / 168;
-      background-color: #1bff00 !important;
+      width: min(35.35vw, 520px, calc(18.5vh * 385.5 / 130));
+      background-color: transparent !important;
       border: none !important;
       border-radius: 0 !important;
       box-shadow: none !important;
       outline: none !important;
       padding: 0 !important;
       margin: 0 !important;
-      display: block;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
       text-decoration: none !important;
     }
 
     .tonaj-home-center-box svg {
       width: 100% !important;
-      height: 100% !important;
+      height: auto !important;
+      aspect-ratio: 385.5 / 130;
       display: block !important;
       border: none !important;
       box-shadow: none !important;
       filter: none !important;
+    }
+
+    .tonaj-loading-dots {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(7px, 0.98vw, 12px);
+      margin-top: clamp(10px, 1.95vh, 18px);
+      pointer-events: none;
+    }
+
+    .tonaj-loading-dot {
+      display: block;
+      width: clamp(11px, 1.72vw, 20px);
+      height: clamp(11px, 1.72vw, 20px);
+      background-color: #000000;
+      opacity: 1;
+      transform: scale(1);
+      transform-origin: center center;
+      will-change: opacity, transform;
+    }
+
+    @keyframes tonajDotLoad {
+      0%, 82%, 100% {
+        opacity: 0.18;
+        transform: scale(0.76);
+      }
+      30%, 46% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .tonaj-home-page.is-loading .tonaj-loading-dot {
+      animation: tonajDotLoad 1.14s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+    }
+
+    .tonaj-home-page.is-loading .tonaj-loading-dot:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .tonaj-home-page.is-loading .tonaj-loading-dot:nth-child(2) {
+      animation-delay: 0.19s;
+    }
+
+    .tonaj-home-page.is-loading .tonaj-loading-dot:nth-child(3) {
+      animation-delay: 0.38s;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tonaj-home-page.is-loading .tonaj-loading-dot {
+        animation: none !important;
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     /* Bas à gauche : FR (entouré d'un cercle fin) & EN */
@@ -5614,35 +5679,30 @@
        LIAISON CHORÉGRAPHIÉE : LOGO CENTRAL TONAJ <-> LISTE DES PROJETS WORK
        ========================================================================== */
     .tonaj-home-center-box {
-      will-change: transform, left, top, width, height, opacity;
-      transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
-      overflow: hidden;
+      will-change: transform, opacity;
+      transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 320ms ease;
+      overflow: visible;
     }
 
     .tonaj-home-center-box svg path {
       transform-box: fill-box;
       transform-origin: center center;
-      transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
+      transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
                   opacity 260ms ease;
     }
 
-    .tonaj-home-page.is-work-preview .tonaj-home-center-box,
-    .tonaj-home-center-box:hover,
-    .tonaj-home-center-box:focus-visible {
-      transform: translate(-50%, -50%) scaleX(1.048) scaleY(1.016);
+    .tonaj-home-page:not(.is-loading) .tonaj-home-center-box:hover,
+    .tonaj-home-page:not(.is-loading) .tonaj-home-center-box:focus-visible {
+      transform: translate(-50%, -50%) scale(1.024);
     }
 
-    .tonaj-home-page.is-work-preview .tonaj-home-center-box svg path,
-    .tonaj-home-center-box:hover svg path,
-    .tonaj-home-center-box:focus-visible svg path {
-      transform: scale(0.975);
-    }
-
-    /* Superposition fluide pendant le morphing Home <-> WORK */
+    /* Fondu doux sur l'accueil Tonaj + roulement pur à l'arrivée sur la roulette Work */
     body.is-morphing-work .tonaj-home-page {
       display: block !important;
       background-color: transparent !important;
       pointer-events: none !important;
+      z-index: 2700 !important;
     }
 
     body.is-morphing-work .tonaj-home-page .tonaj-home-nav,
@@ -5650,6 +5710,21 @@
     body.is-morphing-work .tonaj-home-page .tonaj-home-city {
       opacity: 0 !important;
       pointer-events: none !important;
+    }
+
+    html body#page-body.is-morphing-work #view-portfolio.view-panel.is-active {
+      opacity: 1 !important;
+      transform: none !important;
+      background: #ffffff !important;
+      background-color: #ffffff !important;
+    }
+
+    /* Retour en fondu vers la page de chargement Tonaj */
+    body.is-returning-home .tonaj-home-page {
+      display: block !important;
+      background-color: #ffffff !important;
+      pointer-events: auto !important;
+      z-index: 2800 !important;
     }
 
     #view-portfolio .frames-grid .project-frame {
@@ -6107,34 +6182,43 @@
       display: block;
     }
 
-    /* Typographie éditoriale et blocs de texte partagés */
+    /* Typographie éditoriale et blocs de texte partagés — 100 % uniforme sans gras */
+    .proj-text-block,
+    .proj-caption,
+    .proj-text-block p,
+    .proj-caption p,
+    .proj-text-lead {
+      font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+      font-size: clamp(11.5px, 0.86vw, 13.5px) !important;
+      line-height: 1.52 !important;
+      font-weight: 400 !important;
+      font-style: normal !important;
+      color: #111111 !important;
+      letter-spacing: 0.002em !important;
+      box-sizing: border-box;
+    }
+
     .proj-text-block,
     .proj-caption {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: clamp(11px, 0.84vw, 13.5px);
-      line-height: 1.52;
-      font-weight: 400;
-      color: #111111 !important;
-      letter-spacing: 0.005em;
       margin: 0;
-      box-sizing: border-box;
     }
 
     .proj-text-block p,
     .proj-caption p {
       margin: 0;
       padding: 0;
-      color: #111111 !important;
+    }
+
+    .proj-text-block strong,
+    .proj-text-block b,
+    .proj-caption strong,
+    .proj-caption b {
+      font-weight: 400 !important;
     }
 
     .proj-text-block p + p,
     .proj-caption p + p {
       margin-top: var(--proj-text-gap);
-    }
-
-    .proj-text-lead {
-      font-weight: 600;
-      color: #000000 !important;
     }
 
     /* Pied de page minimaliste de navigation inter-projets aligné sur la grille */
@@ -6312,47 +6396,51 @@
       pointer-events: auto;
     }
 
-    /* 1. Rectangle Vert Électrique (#1bff00) */
+    /* 1. Suppression de l'ancien fond vert — page blanche fidèle à la référence */
     .tonaj-about-green-block {
-      position: absolute;
-      top: 11.63vh;
-      left: 2.35%;
-      width: 88.06%;
-      height: 68.28vh;
-      background-color: #1bff00 !important;
-      z-index: 2;
-      pointer-events: none;
+      display: none !important;
     }
 
-    /* 2. Manifeste Éditorial à gauche sur le bloc vert */
+    /* 2. Bloc d'accroche + manifeste éditorial à gauche */
     .tonaj-about-manifesto {
       position: absolute;
-      top: 26.8vh;
-      left: 3.25%;
-      width: clamp(340px, 49vw, 530px);
+      top: 21.8vh;
+      left: 2.65%;
+      width: clamp(340px, 50.8vw, 600px);
       z-index: 10;
       box-sizing: border-box;
     }
 
-    .tonaj-about-manifesto p {
+    .tonaj-about-manifesto .tonaj-about-lead {
       font-family: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
-      font-size: clamp(9.5px, 0.9vw, 11px);
-      line-height: 1.35;
+      font-size: clamp(11px, 1.15vw, 15px);
+      line-height: 1.38;
+      font-weight: 700;
       color: #000000;
-      margin: 0 0 clamp(7px, 1.1vh, 10px) 0;
-      font-weight: 500;
-      letter-spacing: -0.005em;
+      max-width: clamp(320px, 43.2vw, 510px);
+      margin: 0 0 clamp(16px, 3.3vh, 28px) 0;
+      letter-spacing: -0.008em;
+    }
+
+    .tonaj-about-manifesto p:not(.tonaj-about-lead) {
+      font-family: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+      font-size: clamp(9.3px, 0.91vw, 12px);
+      line-height: 1.38;
+      color: #000000;
+      margin: 0 0 clamp(2px, 0.45vh, 6px) 0;
+      font-weight: 400;
+      letter-spacing: -0.004em;
     }
 
     .tonaj-about-manifesto p:last-child {
       margin-bottom: 0;
     }
 
-    /* 3. Titre Géant 'ABOUT' (Aligné strictement sur WORK : même emplacement bas à gauche, même taille) */
+    /* 3. Titre Géant 'ABOUT' (Aligné strictement bas à gauche) */
     .tonaj-about-giant-title-wrapper {
       position: absolute;
-      left: 2.65%;
-      top: 74.5%;
+      left: 2.5%;
+      top: 74.2%;
       margin: 0 !important;
       padding: 0 !important;
       z-index: 20;
@@ -6375,32 +6463,24 @@
       padding: 0 !important;
     }
 
-    /* 4. Colonne Droite : Nom, Photo et Passions */
+    /* 4. Colonne Droite : Portrait N&B et Mes passions */
     .tonaj-about-right-col {
       position: absolute;
-      top: 12.8vh;
+      top: 19.8vh;
       left: 65.0%;
-      width: 28.0%;
+      width: 29.0%;
       z-index: 15;
       box-sizing: border-box;
     }
 
-    .tonaj-about-name {
-      font-family: "Thutiya", "Playfair Display", "Bodoni MT", serif;
-      font-weight: 700;
-      font-size: clamp(24px, 3.2vw, 36px);
-      line-height: 1.1;
-      color: #000000 !important;
-      margin: 0 0 clamp(6px, 0.9vh, 10px) 0;
-      letter-spacing: -0.01em;
-    }
-
     .tonaj-about-photo-frame {
       position: relative;
-      width: 100%;
-      aspect-ratio: 274 / 345;
+      width: min(100%, clamp(176px, 19.8vw, 262px));
+      max-width: calc(30vh * 1200 / 1260);
+      aspect-ratio: 1200 / 1260;
+      margin-left: clamp(6px, 1.8vw, 22px);
       overflow: hidden;
-      background: #b5b5b5;
+      background: transparent !important;
       box-shadow: none !important;
     }
 
@@ -6408,38 +6488,74 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center bottom;
       display: block;
     }
 
     .tonaj-about-passions-block {
-      margin-top: clamp(8px, 1.4vh, 14px);
+      margin-top: clamp(12px, 2.3vh, 22px);
     }
 
     .tonaj-about-subheading {
-      font-family: "Thutiya", "Playfair Display", "Bodoni MT", serif;
+      font-family: "Playfair Display", "Thutiya", "Bodoni MT", Georgia, serif;
       font-weight: 700;
-      font-size: clamp(20px, 2.75vw, 32px);
-      line-height: 1.1;
+      font-size: clamp(22px, 2.95vw, 38px);
+      line-height: 1.08;
       color: #000000 !important;
-      margin: 0 0 clamp(4px, 0.8vh, 8px) 0;
+      margin: 0 0 clamp(6px, 1.1vh, 12px) 0;
       letter-spacing: -0.01em;
     }
 
     .tonaj-about-passions-text {
       font-family: "Plus Jakarta Sans", "Helvetica Neue", "Segoe UI", system-ui, sans-serif;
-      font-size: clamp(8.5px, 0.8vw, 10px);
-      line-height: 1.35;
+      font-size: clamp(9.3px, 0.91vw, 12px);
+      line-height: 1.38;
+      font-weight: 400;
       color: #000000;
       margin: 0;
       overflow-wrap: break-word;
       word-break: normal;
-      opacity: 0.9;
+      opacity: 1;
+    }
+
+    /* 4b. Informations & Liens (IG, LIN, CV) alignés en bas à droite avec ABOUT */
+    .tonaj-about-info-block {
+      position: absolute;
+      left: 65.0%;
+      top: 74.8%;
+      width: 29.0%;
+      z-index: 20;
+      box-sizing: border-box;
+    }
+
+    .tonaj-about-info-heading {
+      font-family: "Playfair Display", "Thutiya", "Bodoni MT", Georgia, serif;
+      font-weight: 700;
+      font-size: clamp(20px, 2.45vw, 32px);
+      line-height: 1.1;
+      color: #000000 !important;
+      margin: 0 0 clamp(12px, 2.5vh, 22px) 0;
+      letter-spacing: -0.01em;
+    }
+
+    .tonaj-about-social-links {
+      display: flex;
+      align-items: baseline;
+      gap: clamp(16px, 2.1vw, 28px);
+    }
+
+    .tonaj-about-view .tonaj-social-link {
+      font-family: "Playfair Display", "Thutiya", "Bodoni MT", Georgia, serif;
+      font-weight: 700;
+      font-size: clamp(13px, 1.38vw, 17px);
+      color: #000000 !important;
+      letter-spacing: 0.02em;
     }
 
     /* 5. Pied de page fixe sur Desktop (FR / EN et LYON) */
     .tonaj-about-view .tonaj-home-lang {
       position: fixed !important;
-      left: 3.06% !important;
+      left: 2.734% !important;
       bottom: clamp(14px, 3.18vh, 26px) !important;
       z-index: 100;
       pointer-events: auto;
@@ -6455,7 +6571,7 @@
     }
 
     /* =============================================================
-       PAGE CONTACT (MOCKUP RÉFÉRENCE COMPOSITION & TYPOGRAPHIE)
+       PAGE CONTACT (MOCKUP RÉFÉRENCE FOND BLANC & ÉDITORIAL)
        ============================================================= */
     #view-contact.tonaj-contact-view {
       position: relative;
@@ -6497,41 +6613,37 @@
       pointer-events: auto;
     }
 
-    /* 1. Rectangle Vert Électrique (#1bff00) */
-    .tonaj-contact-green-block {
+    /* 1. Bloc Formulaire épuré (2 colonnes alignées sur la gauche/centre) */
+    .tonaj-contact-form-panel {
       position: absolute;
-      top: 0;
-      left: 11.425%;
-      width: 62.695%;
-      height: 85.36vh;
-      background-color: #1bff00 !important;
-      z-index: 2;
+      top: 28.4vh;
+      left: 7.8%;
+      width: 47.45%;
+      z-index: 15;
       box-sizing: border-box;
-      padding-top: clamp(140px, 27.5vh, 200px);
-      padding-left: 4.88%;
-      padding-right: 4.88%;
     }
 
-    /* 2. Formulaire sur le bloc vert */
     .tonaj-contact-form {
       position: relative;
       width: 100%;
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: stretch;
       box-sizing: border-box;
     }
 
     .tonaj-contact-form-left {
-      width: 42%;
+      width: 43.0%;
+      min-height: clamp(104px, 16.4vh, 148px);
       display: flex;
       flex-direction: column;
-      gap: clamp(14px, 2.5vh, 22px);
+      justify-content: space-between;
+      gap: clamp(14px, 2.8vh, 26px);
     }
 
     .tonaj-contact-form-right {
-      width: 50%;
-      margin-left: 8%;
+      position: relative;
+      width: 43.0%;
       display: flex;
       flex-direction: column;
     }
@@ -6540,128 +6652,191 @@
       position: relative;
       display: flex;
       flex-direction: column;
+      box-sizing: border-box;
+    }
+
+    .tonaj-form-group-line {
+      flex-direction: row;
+      align-items: baseline;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.72);
+      padding-bottom: 1px;
+      transition: border-bottom-color 0.2s ease;
+    }
+
+    .tonaj-form-group-line:focus-within {
+      border-bottom-color: #000000;
     }
 
     .tonaj-form-label {
-      font-family: "Plus Jakarta Sans", "Helvetica Neue", sans-serif;
+      font-family: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
       font-weight: 700;
-      font-size: clamp(10px, 1.05vw, 12px);
+      font-size: clamp(9px, 0.88vw, 11.5px);
       color: #000000;
-      line-height: 1.2;
-      margin-bottom: 2px;
+      line-height: 1.15;
+      margin: 0;
       letter-spacing: -0.01em;
       text-transform: none;
       cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .tonaj-form-group-line .tonaj-form-label {
+      padding-right: 8px;
     }
 
     .tonaj-form-input {
       width: 100%;
-      max-width: 240px;
+      flex: 1;
+      min-width: 0;
       background: transparent !important;
       border: none !important;
-      border-bottom: 1px solid #000000 !important;
       border-radius: 0 !important;
-      padding: 1px 0 3px 0 !important;
-      font-family: "Plus Jakarta Sans", sans-serif;
-      font-size: clamp(11.5px, 1.1vw, 13.5px);
+      padding: 0 !important;
+      font-family: "Plus Jakarta Sans", "Helvetica Neue", sans-serif;
+      font-size: clamp(10.5px, 1vw, 13px);
       font-weight: 500;
       color: #000000 !important;
       outline: none !important;
       box-shadow: none !important;
       box-sizing: border-box;
-      transition: border-bottom-color 0.2s ease;
-    }
-
-    .tonaj-form-input:focus {
-      border-bottom-width: 1.5px !important;
+      line-height: 1.2;
     }
 
     .tonaj-form-group-message {
       width: 100%;
+      flex: 1;
+      min-height: clamp(104px, 16.4vh, 148px);
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.72);
+      padding-bottom: 2px;
+      transition: border-bottom-color 0.2s ease;
+    }
+
+    .tonaj-form-group-message:focus-within {
+      border-bottom-color: #000000;
     }
 
     .tonaj-form-textarea {
-      max-width: 100% !important;
       width: 100% !important;
-      height: clamp(84px, 13.5vh, 120px) !important;
+      flex: 1;
+      height: auto !important;
       resize: none !important;
-      border-bottom: 1px solid #000000 !important;
+      border: none !important;
       line-height: 1.35;
-      margin-bottom: 4px;
+      padding: 6px 0 2px 0 !important;
     }
 
     .tonaj-form-submit-row {
+      position: absolute;
+      top: 100%;
+      right: 0;
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      margin-top: 4px;
+      margin-top: 8px;
     }
 
     .tonaj-form-submit-btn {
       background: transparent !important;
       border: none !important;
       outline: none !important;
-      padding: 3px 0;
+      padding: 2px 0;
       cursor: pointer;
-      font-family: "Plus Jakarta Sans", sans-serif;
+      font-family: "Plus Jakarta Sans", "Helvetica Neue", sans-serif;
       font-weight: 700;
-      font-size: clamp(10px, 1vw, 12px);
+      font-size: clamp(9.5px, 0.88vw, 11px);
       color: #000000 !important;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
+      opacity: 0.72;
       transition: opacity 0.2s ease, transform 0.2s ease;
       letter-spacing: -0.01em;
     }
 
     .tonaj-form-submit-btn:hover {
-      opacity: 0.65;
+      opacity: 1;
       transform: translateX(2px);
     }
 
     .tonaj-form-status {
+      position: absolute;
+      top: calc(100% + 28px);
+      right: 0;
       font-family: "Plus Jakarta Sans", sans-serif;
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 700;
       color: #000000;
-      margin-top: 4px;
       display: none;
       text-align: right;
-    }
-
-    /* 3. Ligne Contact Info : Email & Téléphone (Gros Sans-serif noir) */
-    .tonaj-contact-huge-link {
-      position: absolute;
-      top: 61.88vh;
-      font-family: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
-      font-weight: 800;
-      font-size: clamp(20px, 3.25vw, 36px);
-      line-height: 1;
-      color: #000000 !important;
-      text-decoration: none !important;
-      letter-spacing: -0.03em;
-      z-index: 20;
-      transition: opacity 0.2s ease;
       white-space: nowrap;
     }
 
-    .tonaj-contact-huge-link:hover {
+    /* 2. Colonne Droite : Coordonnées (Email / Téléphone) & Réseaux (IG, LIN, CV) */
+    .tonaj-contact-right-info {
+      position: absolute;
+      top: 26.2vh;
+      left: 74.5%;
+      width: 22.5%;
+      z-index: 20;
+      box-sizing: border-box;
+    }
+
+    .tonaj-contact-direct-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: clamp(6px, 1.3vh, 13px);
+    }
+
+    .tonaj-contact-direct-link {
+      font-family: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+      font-weight: 400;
+      font-size: clamp(11.5px, 1.32vw, 17px);
+      line-height: 1.25;
+      color: #000000 !important;
+      text-decoration: none !important;
+      letter-spacing: -0.015em;
+      white-space: nowrap;
+      transition: opacity 0.2s ease;
+    }
+
+    .tonaj-contact-direct-link:hover {
       opacity: 0.6;
     }
 
-    .tonaj-contact-email {
-      left: 0.4%;
+    .tonaj-contact-social-links {
+      position: relative;
+      margin-top: clamp(32px, 8.8vh, 68px);
+      padding-left: clamp(2px, 0.5vw, 6px);
+      display: flex;
+      align-items: baseline;
+      gap: clamp(14px, 1.65vw, 24px);
+      z-index: 25;
     }
 
-    .tonaj-contact-phone {
-      left: 61.5%;
+    .tonaj-social-link {
+      font-family: "Playfair Display", "Thutiya", "Bodoni MT", Georgia, serif;
+      font-weight: 700;
+      font-size: clamp(11.5px, 1.2vw, 15px);
+      color: #000000 !important;
+      text-decoration: none !important;
+      letter-spacing: 0.02em;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      display: inline-block;
     }
 
-    /* 4. Titre Géant 'CONTACT' (Aligné strictement sur WORK : même emplacement bas à gauche, même taille) */
+    .tonaj-social-link:hover {
+      opacity: 0.6;
+      transform: translateY(-1px);
+    }
+
+    /* 3. Titre Géant 'CONTACT' (Aligné strictement bas à gauche, même gabarit que ABOUT & WORK) */
     .tonaj-contact-giant-title-wrapper {
       position: absolute;
       left: 2.65%;
-      top: 74.5%;
+      top: 74.2%;
       margin: 0 !important;
       padding: 0 !important;
       z-index: 20;
@@ -6684,34 +6859,7 @@
       padding: 0 !important;
     }
 
-    /* 5. Liens Sociaux / CV (IG, LIN, CV) */
-    .tonaj-contact-social-links {
-      position: absolute;
-      top: 83.33vh;
-      left: 76.07%;
-      display: flex;
-      align-items: baseline;
-      gap: clamp(14px, 1.95vw, 26px);
-      z-index: 25;
-    }
-
-    .tonaj-social-link {
-      font-family: "Thutiya", "Playfair Display", "Bodoni MT", serif;
-      font-weight: 500;
-      font-size: clamp(14px, 1.46vw, 17.5px);
-      color: #000000 !important;
-      text-decoration: none !important;
-      letter-spacing: 0.04em;
-      transition: opacity 0.2s ease, transform 0.2s ease;
-      display: inline-block;
-    }
-
-    .tonaj-social-link:hover {
-      opacity: 0.6;
-      transform: translateY(-1px);
-    }
-
-    /* 6. Pied de page fixe sur Desktop (FR / EN et LYON) */
+    /* 4. Pied de page fixe sur Desktop (FR / EN et LYON) */
     .tonaj-contact-view .tonaj-home-lang {
       position: fixed !important;
       left: 2.734% !important;
@@ -6764,17 +6912,24 @@
         left: auto !important;
         width: calc(100% - 8vw) !important;
         max-width: none !important;
-        background-color: #1bff00 !important;
-        padding: 24px 20px 20px 20px !important;
-        border-radius: 4px !important;
-        margin: 16px 4vw 24px 4vw !important;
+        background-color: transparent !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        margin: 12px 4vw 24px 4vw !important;
         box-sizing: border-box !important;
       }
 
-      .tonaj-about-manifesto p {
+      .tonaj-about-manifesto .tonaj-about-lead {
+        font-size: clamp(14px, 3.9vw, 17px) !important;
+        line-height: 1.38 !important;
+        max-width: none !important;
+        margin-bottom: 18px !important;
+      }
+
+      .tonaj-about-manifesto p:not(.tonaj-about-lead) {
         font-size: clamp(12px, 3.2vw, 13.5px) !important;
         line-height: 1.45 !important;
-        margin-bottom: 12px !important;
+        margin-bottom: 8px !important;
       }
 
       .tonaj-about-right-col {
@@ -6786,30 +6941,40 @@
         box-sizing: border-box !important;
       }
 
-      .tonaj-about-name {
-        font-size: clamp(26px, 7vw, 34px) !important;
-        margin-bottom: 14px !important;
-      }
-
       .tonaj-about-photo-frame {
-        max-width: 300px !important;
-        margin-bottom: 20px !important;
+        max-width: 260px !important;
+        margin-left: 0 !important;
+        margin-bottom: 18px !important;
       }
 
       .tonaj-about-subheading {
-        font-size: clamp(22px, 6vw, 28px) !important;
+        font-size: clamp(24px, 6.5vw, 32px) !important;
       }
 
       .tonaj-about-passions-text {
-        font-size: clamp(10px, 2.8vw, 11.5px) !important;
-        line-height: 1.4 !important;
+        font-size: clamp(11.5px, 3.1vw, 13px) !important;
+        line-height: 1.42 !important;
+      }
+
+      .tonaj-about-info-block {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        padding: 24px 4vw 0 4vw !important;
+        box-sizing: border-box !important;
+      }
+
+      .tonaj-about-info-heading {
+        font-size: clamp(22px, 6vw, 28px) !important;
+        margin-bottom: 14px !important;
       }
 
       .tonaj-about-giant-title-wrapper {
         position: relative !important;
         top: auto !important;
         left: auto !important;
-        padding: 24px 4vw 0 4vw !important;
+        padding: 28px 4vw 0 4vw !important;
       }
 
       .tonaj-about-giant-title {
@@ -6842,86 +7007,107 @@
       .tonaj-contact-stage {
         height: auto !important;
         min-height: auto !important;
-        padding-top: clamp(65px, 11vh, 85px);
-        padding-bottom: 40px;
+        padding: clamp(80px, 12vh, 100px) 4vw 24px 4vw !important;
         display: flex;
         flex-direction: column;
         align-items: stretch;
+        gap: 28px;
+        background-color: #ffffff !important;
       }
 
-      .tonaj-contact-green-block {
+      .tonaj-contact-form-panel {
         position: relative !important;
         top: auto !important;
-        left: 4vw !important;
-        width: 92vw !important;
-        height: auto !important;
-        padding: 32px 6vw 36px 6vw !important;
-        border-radius: 4px;
+        left: auto !important;
+        width: 100% !important;
+        order: 1;
       }
 
       .tonaj-contact-form {
         flex-direction: column !important;
-        gap: 20px;
+        gap: 22px;
       }
 
       .tonaj-contact-form-left,
       .tonaj-contact-form-right {
         width: 100% !important;
+        min-height: auto !important;
         margin-left: 0 !important;
       }
 
+      .tonaj-contact-form-left {
+        gap: 20px !important;
+      }
+
+      .tonaj-form-label {
+        font-size: 12px !important;
+      }
+
       .tonaj-form-input {
-        max-width: 100% !important;
+        font-size: 14px !important;
       }
 
-      .tonaj-form-textarea {
-        height: 90px !important;
+      .tonaj-form-group-message {
+        min-height: 110px !important;
       }
 
-      .tonaj-contact-huge-link {
+      .tonaj-form-submit-row {
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        margin-top: 10px !important;
+      }
+
+      .tonaj-form-submit-btn {
+        font-size: 12px !important;
+      }
+
+      .tonaj-form-status {
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        margin-top: 8px !important;
+        white-space: normal !important;
+      }
+
+      .tonaj-contact-right-info {
         position: relative !important;
         top: auto !important;
         left: auto !important;
-        display: block !important;
-        padding: 0 4vw;
-        font-size: clamp(18px, 5.2vw, 25px) !important;
+        width: 100% !important;
+        order: 2;
+      }
+
+      .tonaj-contact-direct-link {
+        font-size: clamp(14.5px, 4.1vw, 18px) !important;
         white-space: normal !important;
         word-break: break-word;
       }
 
-      .tonaj-contact-email {
-        margin-top: 32px !important;
-      }
-
-      .tonaj-contact-phone {
-        margin-top: 10px !important;
+      .tonaj-contact-social-links {
+        margin-top: 20px !important;
+        padding-left: 0 !important;
+        gap: 22px !important;
       }
 
       .tonaj-contact-giant-title-wrapper {
         position: relative !important;
         top: auto !important;
         left: auto !important;
-        padding: 24px 4vw 0 4vw !important;
+        padding: 10px 0 0 0 !important;
+        order: 3;
       }
 
       .tonaj-contact-giant-title {
-        font-size: clamp(52px, 15vw, 84px) !important;
+        font-size: clamp(50px, 16vw, 88px) !important;
         line-height: 0.9 !important;
-      }
-
-      .tonaj-contact-social-links {
-        position: relative !important;
-        top: auto !important;
-        left: auto !important;
-        padding: 18px 4vw 20px 4vw !important;
-        gap: 24px;
       }
 
       .tonaj-contact-view .tonaj-home-lang {
         position: relative !important;
         left: 4vw !important;
         bottom: auto !important;
-        margin: 16px 0;
+        margin: 12px 0 10px 0;
         display: inline-flex !important;
       }
 
@@ -6930,7 +7116,7 @@
         left: 4vw !important;
         right: auto !important;
         bottom: auto !important;
-        margin-bottom: 24px;
+        margin-bottom: 28px;
         display: block !important;
       }
     }
@@ -7056,8 +7242,13 @@
 
     @media (max-width: 680px) {
       .tonaj-home-center-box {
-        width: min(82vw, 360px, calc(44vh * 433 / 168)) !important;
-        width: min(82vw, 360px, calc(44dvh * 433 / 168)) !important;
+        width: min(74vw, 330px, calc(28vh * 385.5 / 130)) !important;
+        width: min(74vw, 330px, calc(28dvh * 385.5 / 130)) !important;
+      }
+
+      .tonaj-loading-dot {
+        width: clamp(10px, 3vw, 15px);
+        height: clamp(10px, 3vw, 15px);
       }
     }
 
@@ -7191,11 +7382,6 @@
           Fidélité stricte à la maquette sur Desktop (> 960px) + Adaptation Windows DPI 125%/150%
        ========================================================================== */
     @media (min-width: 961px) {
-      /* Empêcher l'email et le téléphone de se toucher sur les écrans intermédiaires (961px - 1200px) */
-      .tonaj-contact-huge-link {
-        font-size: clamp(17.5px, 2.85vw, 36px) !important;
-      }
-
       /* Adaptation écrans PC portables Windows avec mise à l'échelle 125% / 150% (~1280x620 - 1366x680) */
       @media (max-height: 740px) {
         .tonaj-work-heading {
@@ -7205,54 +7391,64 @@
         .tonaj-work-active-desc {
           top: 71.5% !important;
         }
-        .tonaj-about-green-block {
-          top: 10.5vh !important;
-          height: 66vh !important;
-        }
         .tonaj-about-manifesto {
-          top: 15.5vh !important;
+          top: 19.5vh !important;
           width: clamp(360px, 51vw, 560px) !important;
         }
-        .tonaj-about-manifesto p {
-          font-size: clamp(9.5px, 1.35vh, 11px) !important;
-          line-height: 1.32 !important;
-          margin-bottom: clamp(5px, 0.9vh, 8px) !important;
+        .tonaj-about-manifesto .tonaj-about-lead {
+          font-size: clamp(10.5px, 1.75vh, 14px) !important;
+          margin-bottom: clamp(12px, 2.6vh, 22px) !important;
+        }
+        .tonaj-about-manifesto p:not(.tonaj-about-lead) {
+          font-size: clamp(9px, 1.38vh, 11.2px) !important;
+          line-height: 1.35 !important;
+          margin-bottom: clamp(2px, 0.45vh, 5px) !important;
         }
         .tonaj-about-right-col {
-          top: 11.5vh !important;
-          width: min(26%, calc(42vh * 274 / 345)) !important;
+          top: 18.0vh !important;
+          width: 29.0% !important;
         }
-        .tonaj-about-name {
-          font-size: clamp(20px, 3.6vh, 32px) !important;
+        .tonaj-about-photo-frame {
+          max-width: calc(28vh * 1200 / 1260) !important;
         }
         .tonaj-about-subheading {
-          font-size: clamp(18px, 3.1vh, 28px) !important;
+          font-size: clamp(20px, 4.1vh, 34px) !important;
+        }
+        .tonaj-about-passions-text {
+          font-size: clamp(9px, 1.35vh, 11.2px) !important;
+          line-height: 1.35 !important;
+        }
+        .tonaj-about-info-block {
+          top: 73.5vh !important;
+        }
+        .tonaj-about-info-heading {
+          font-size: clamp(18px, 3.4vh, 28px) !important;
+          margin-bottom: clamp(8px, 1.8vh, 16px) !important;
         }
         .tonaj-about-giant-title-wrapper {
-          top: 71.5% !important;
+          top: 72.5% !important;
         }
         .tonaj-about-giant-title {
           font-size: min(19vh, 15.6vw) !important;
         }
-        .tonaj-contact-green-block {
-          height: 82vh !important;
-          padding-top: clamp(68px, 14vh, 120px) !important;
+        .tonaj-contact-form-panel {
+          top: 26vh !important;
         }
-        .tonaj-form-textarea {
-          height: clamp(54px, 10.5vh, 86px) !important;
+        .tonaj-contact-form-left,
+        .tonaj-form-group-message {
+          min-height: clamp(92px, 16vh, 132px) !important;
         }
-        .tonaj-contact-huge-link {
-          top: 59vh !important;
-          font-size: clamp(17px, 2.75vw, 32px) !important;
+        .tonaj-contact-right-info {
+          top: 24.5vh !important;
+        }
+        .tonaj-contact-social-links {
+          margin-top: clamp(24px, 7.5vh, 56px) !important;
         }
         .tonaj-contact-giant-title-wrapper {
-          top: 71.5% !important;
+          top: 72.5% !important;
         }
         .tonaj-contact-giant-title {
           font-size: min(19vh, 15.6vw) !important;
-        }
-        .tonaj-contact-social-links {
-          top: 79.5vh !important;
         }
       }
     }
@@ -7260,7 +7456,7 @@
     /* Sécurité anti-superposition sur fenêtres très courtes (ex: téléphone paysage ou PC split-screen <= 540px de hauteur) */
     @media (max-height: 540px) {
       #tonaj-home-page .tonaj-home-center-box {
-        width: min(50vw, 280px, calc(38vh * 433 / 168)) !important;
+        width: min(44vw, 260px, calc(26vh * 385.5 / 130)) !important;
       }
       #view-portfolio .portfolio-section {
         --carousel-stage-w: min(58vw, calc(34vh * 501 / 166)) !important;
@@ -7295,11 +7491,11 @@
       }
       .tonaj-about-manifesto,
       .tonaj-about-right-col,
+      .tonaj-about-info-block,
       .tonaj-about-giant-title-wrapper,
-      .tonaj-contact-green-block,
-      .tonaj-contact-huge-link,
-      .tonaj-contact-giant-title-wrapper,
-      .tonaj-contact-social-links {
+      .tonaj-contact-form-panel,
+      .tonaj-contact-right-info,
+      .tonaj-contact-giant-title-wrapper {
         position: relative !important;
         top: auto !important;
         left: auto !important;
@@ -7308,9 +7504,16 @@
         max-width: 760px !important;
         margin: 0 auto 16px auto !important;
       }
-      .tonaj-contact-green-block {
-        height: auto !important;
-        padding: 24px 5% !important;
+      .tonaj-form-submit-row,
+      .tonaj-form-status {
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        margin-top: 8px !important;
+      }
+      .tonaj-contact-social-links {
+        margin-top: 16px !important;
+        padding-left: 0 !important;
       }
       .tonaj-about-view .tonaj-home-lang,
       .tonaj-about-view .tonaj-home-city,
@@ -7325,15 +7528,18 @@
     }
 
     @media (max-width: 960px) {
-      /* Ordre logique sur Mobile/Tablette dans About : 1. Manifeste vert -> 2. Nom & Photo -> 3. Titre ABOUT */
+      /* Ordre logique sur Mobile/Tablette dans About : 1. Manifeste -> 2. Portrait & Passions -> 3. Informations -> 4. Titre ABOUT */
       .tonaj-about-manifesto {
         order: 1 !important;
       }
       .tonaj-about-right-col {
         order: 2 !important;
       }
-      .tonaj-about-giant-title-wrapper {
+      .tonaj-about-info-block {
         order: 3 !important;
+      }
+      .tonaj-about-giant-title-wrapper {
+        order: 4 !important;
       }
     }
 
@@ -7450,10 +7656,14 @@
     </nav>
 
     <a href="#portfolio" class="tonaj-home-center-box" id="tonaj-center-box" data-tonaj-nav="portfolio" aria-label="Accéder au portfolio Tonaj">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 433 168" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Tonaj">
-        <rect width="433" height="168" fill="#1bff00"/>
-        <path fill="#19a400" fill-rule="evenodd" d="M 21.90 25.41 L 112.98 25.41 C 113.02 33.50, 113.15 43.00, 113.58 51.30 L 111.15 51.30 C 109.20 46.80, 106.40 39.80, 102.30 33.80 C 99.60 30.00, 96.60 29.15, 91.50 29.15 L 79.45 29.15 L 79.45 117.50 C 79.45 121.80, 80.60 124.20, 83.80 125.40 C 86.40 126.35, 89.60 126.65, 92.25 126.75 L 92.25 129.13 L 42.28 129.13 L 42.28 126.75 C 44.93 126.65, 48.13 126.35, 50.73 125.40 C 53.93 124.20, 55.08 121.80, 55.08 117.50 L 55.08 29.15 L 43.03 29.15 C 37.93 29.15, 34.93 30.00, 32.23 33.80 C 28.13 39.80, 25.33 46.80, 23.38 51.30 L 21.17 51.30 C 21.32 43.00, 21.75 33.50, 21.90 25.41 Z M 186.47 91.05 L 186.29 95.17 L 185.73 99.14 L 184.82 102.99 L 183.55 106.71 L 181.93 110.26 L 179.99 113.61 L 177.73 116.75 L 175.19 119.63 L 172.38 122.24 L 169.32 124.55 L 166.04 126.55 L 162.58 128.20 L 158.96 129.50 L 155.20 130.44 L 151.33 131.01 L 147.31 131.20 L 143.29 131.01 L 139.42 130.44 L 135.66 129.50 L 132.04 128.20 L 128.58 126.55 L 125.30 124.55 L 122.24 122.24 L 119.43 119.63 L 116.89 116.75 L 114.63 113.61 L 112.69 110.26 L 111.07 106.71 L 109.80 102.99 L 108.89 99.14 L 108.33 95.17 L 108.15 91.05 L 108.33 86.93 L 108.89 82.96 L 109.80 79.11 L 111.07 75.39 L 112.69 71.84 L 114.63 68.49 L 116.89 65.35 L 119.43 62.47 L 122.24 59.86 L 125.30 57.55 L 128.58 55.55 L 132.04 53.90 L 135.66 52.60 L 139.42 51.66 L 143.29 51.09 L 147.31 50.90 L 151.33 51.09 L 155.20 51.66 L 158.96 52.60 L 162.58 53.90 L 166.04 55.55 L 169.32 57.55 L 172.38 59.86 L 175.19 62.47 L 177.73 65.35 L 179.99 68.49 L 181.93 71.84 L 183.55 75.39 L 184.82 79.11 L 185.73 82.96 L 186.29 86.93 Z M 162.08 91.05 L 162.01 86.55 L 161.80 82.69 L 161.44 79.09 L 160.96 75.71 L 160.34 72.54 L 159.59 69.58 L 158.73 66.86 L 157.75 64.38 L 156.68 62.15 L 155.52 60.18 L 154.27 58.50 L 152.96 57.11 L 151.60 56.02 L 150.19 55.23 L 148.76 54.76 L 147.31 54.60 L 145.86 54.76 L 144.43 55.23 L 143.02 56.02 L 141.66 57.11 L 140.35 58.50 L 139.10 60.18 L 137.94 62.15 L 136.87 64.38 L 135.89 66.86 L 135.03 69.58 L 134.28 72.54 L 133.66 75.71 L 133.18 79.09 L 132.82 82.69 L 132.61 86.55 L 132.54 91.05 L 132.61 95.55 L 132.82 99.41 L 133.18 103.01 L 133.66 106.39 L 134.28 109.56 L 135.03 112.52 L 135.89 115.24 L 136.87 117.72 L 137.94 119.95 L 139.10 121.92 L 140.35 123.60 L 141.66 124.99 L 143.02 126.08 L 144.43 126.87 L 145.86 127.34 L 147.31 127.50 L 148.76 127.34 L 150.19 126.87 L 151.60 126.08 L 152.96 124.99 L 154.27 123.60 L 155.52 121.92 L 156.68 119.95 L 157.75 117.72 L 158.73 115.24 L 159.59 112.52 L 160.34 109.56 L 160.96 106.39 L 161.44 103.01 L 161.80 99.41 L 162.01 95.55 Z M 221.25 54.50 H 263.85 V 69.00 H 221.25 Z M 206.80 69.00 H 221.25 V 125.95 H 206.80 Z M 263.85 69.00 H 278.20 V 125.95 H 263.85 Z M 306.00 54.50 H 348.95 V 69.00 H 306.00 Z M 348.95 69.00 H 363.30 V 125.95 H 306.00 V 111.50 H 348.95 V 97.40 H 306.00 V 83.10 H 348.95 Z M 291.85 97.40 H 306.00 V 111.50 H 291.85 Z M 391.35 26.00 H 405.90 V 40.90 H 391.35 Z M 391.35 54.50 H 405.90 V 139.90 H 391.35 Z M 376.95 139.90 H 391.35 V 154.15 H 376.95 Z"/>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="21 25 385.5 130" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Tonaj">
+        <path fill="#000000" fill-rule="evenodd" d="M 21.90 25.41 L 112.98 25.41 C 113.02 33.50, 113.15 43.00, 113.58 51.30 L 111.15 51.30 C 109.20 46.80, 106.40 39.80, 102.30 33.80 C 99.60 30.00, 96.60 29.15, 91.50 29.15 L 79.45 29.15 L 79.45 117.50 C 79.45 121.80, 80.60 124.20, 83.80 125.40 C 86.40 126.35, 89.60 126.65, 92.25 126.75 L 92.25 129.13 L 42.28 129.13 L 42.28 126.75 C 44.93 126.65, 48.13 126.35, 50.73 125.40 C 53.93 124.20, 55.08 121.80, 55.08 117.50 L 55.08 29.15 L 43.03 29.15 C 37.93 29.15, 34.93 30.00, 32.23 33.80 C 28.13 39.80, 25.33 46.80, 23.38 51.30 L 21.17 51.30 C 21.32 43.00, 21.75 33.50, 21.90 25.41 Z M 186.47 91.05 L 186.29 95.17 L 185.73 99.14 L 184.82 102.99 L 183.55 106.71 L 181.93 110.26 L 179.99 113.61 L 177.73 116.75 L 175.19 119.63 L 172.38 122.24 L 169.32 124.55 L 166.04 126.55 L 162.58 128.20 L 158.96 129.50 L 155.20 130.44 L 151.33 131.01 L 147.31 131.20 L 143.29 131.01 L 139.42 130.44 L 135.66 129.50 L 132.04 128.20 L 128.58 126.55 L 125.30 124.55 L 122.24 122.24 L 119.43 119.63 L 116.89 116.75 L 114.63 113.61 L 112.69 110.26 L 111.07 106.71 L 109.80 102.99 L 108.89 99.14 L 108.33 95.17 L 108.15 91.05 L 108.33 86.93 L 108.89 82.96 L 109.80 79.11 L 111.07 75.39 L 112.69 71.84 L 114.63 68.49 L 116.89 65.35 L 119.43 62.47 L 122.24 59.86 L 125.30 57.55 L 128.58 55.55 L 132.04 53.90 L 135.66 52.60 L 139.42 51.66 L 143.29 51.09 L 147.31 50.90 L 151.33 51.09 L 155.20 51.66 L 158.96 52.60 L 162.58 53.90 L 166.04 55.55 L 169.32 57.55 L 172.38 59.86 L 175.19 62.47 L 177.73 65.35 L 179.99 68.49 L 181.93 71.84 L 183.55 75.39 L 184.82 79.11 L 185.73 82.96 L 186.29 86.93 Z M 162.08 91.05 L 162.01 86.55 L 161.80 82.69 L 161.44 79.09 L 160.96 75.71 L 160.34 72.54 L 159.59 69.58 L 158.73 66.86 L 157.75 64.38 L 156.68 62.15 L 155.52 60.18 L 154.27 58.50 L 152.96 57.11 L 151.60 56.02 L 150.19 55.23 L 148.76 54.76 L 147.31 54.60 L 145.86 54.76 L 144.43 55.23 L 143.02 56.02 L 141.66 57.11 L 140.35 58.50 L 139.10 60.18 L 137.94 62.15 L 136.87 64.38 L 135.89 66.86 L 135.03 69.58 L 134.28 72.54 L 133.66 75.71 L 133.18 79.09 L 132.82 82.69 L 132.61 86.55 L 132.54 91.05 L 132.61 95.55 L 132.82 99.41 L 133.18 103.01 L 133.66 106.39 L 134.28 109.56 L 135.03 112.52 L 135.89 115.24 L 136.87 117.72 L 137.94 119.95 L 139.10 121.92 L 140.35 123.60 L 141.66 124.99 L 143.02 126.08 L 144.43 126.87 L 145.86 127.34 L 147.31 127.50 L 148.76 127.34 L 150.19 126.87 L 151.60 126.08 L 152.96 124.99 L 154.27 123.60 L 155.52 121.92 L 156.68 119.95 L 157.75 117.72 L 158.73 115.24 L 159.59 112.52 L 160.34 109.56 L 160.96 106.39 L 161.44 103.01 L 161.80 99.41 L 162.01 95.55 Z M 221.25 54.50 H 263.85 V 69.00 H 221.25 Z M 206.80 69.00 H 221.25 V 125.95 H 206.80 Z M 263.85 69.00 H 278.20 V 125.95 H 263.85 Z M 306.00 54.50 H 348.95 V 69.00 H 306.00 Z M 348.95 69.00 H 363.30 V 125.95 H 306.00 V 111.50 H 348.95 V 97.40 H 306.00 V 83.10 H 348.95 Z M 291.85 97.40 H 306.00 V 111.50 H 291.85 Z M 391.35 26.00 H 405.90 V 40.90 H 391.35 Z M 391.35 54.50 H 405.90 V 139.90 H 391.35 Z M 376.95 139.90 H 391.35 V 154.15 H 376.95 Z"/>
       </svg>
+      <div class="tonaj-loading-dots" id="tonaj-loading-dots" aria-hidden="true">
+        <span class="tonaj-loading-dot"></span>
+        <span class="tonaj-loading-dot"></span>
+        <span class="tonaj-loading-dot"></span>
+      </div>
     </a>
 
     <div class="tonaj-home-lang" role="group" aria-label="Sélecteur de langue">
@@ -7613,9 +7823,7 @@
           <li class="drawer-project-item">
             <a href="#project-03" class="drawer-project-link" data-project-id="project-03">
               <div class="drawer-preview-thumb" style="background-color: rgb(174, 120, 210);">
-                <svg viewBox="0 0 582 521" fill="none" stroke="rgb(98, 45, 135)" stroke-width="24" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M 389.16 235.05 C 389.16 287.22 346.27 329.51 293.38 329.51 C 240.48 329.51 197.59 287.22 197.59 235.05 C 197.59 182.88 240.48 140.59 293.38 140.59 C 346.27 140.59 389.16 182.88 389.16 235.05 Z M 85.57 32.00 L 137.19 32.00 C 137.19 32.00 186.86 42.20 188.80 89.42 C 190.75 136.63 188.80 235.05 188.80 235.05 C 188.80 235.05 186.60 336.42 293.38 340.26 L 345.61 340.26 C 345.61 340.26 395.28 337.38 398.20 391.17 L 398.20 436.31 C 398.20 436.31 398.20 485.30 344.63 487.22 C 291.07 489.14 161.53 487.22 161.53 487.22 C 161.53 487.22 33.95 479.54 32.97 357.55 C 32.00 235.57 32.97 89.42 32.97 89.42 C 32.97 89.42 35.89 38.79 85.57 32.00 Z M 325.18 487.71 L 370.93 488.08 L 415.73 488.08 C 539.43 488.12 547.21 360.43 547.21 360.43 C 547.21 360.43 550.14 228.84 547.21 179.86 C 544.29 130.87 493.65 127.03 493.65 127.03 L 447.87 127.03 C 447.87 127.03 399.18 130.87 398.20 178.90 L 397.23 226.92 L 384.04 265.61" />
-                </svg>
+                <img src="symbole/nouveau-symbolekompress.webp" alt="KOMPRESS" width="650" height="1140" decoding="async" loading="eager">
               </div>
               <div class="drawer-project-info">
                 <div class="drawer-project-meta-row">
@@ -7809,9 +8017,7 @@
             <article class="project-card" id="project-03" tabindex="0" role="button" aria-label="03 — ASSISE ÉPHÉMÈRE // ÉCO-CONCEPTION">
               <div class="project-frame" style="background-color: rgb(174, 120, 210);">
                 <div class="frame-illustration">
-                  <svg viewBox="0 0 582 521" preserveAspectRatio="xMinYMid meet" fill="none" stroke="rgb(98, 45, 135)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M 389.16 235.05 C 389.16 287.22 346.27 329.51 293.38 329.51 C 240.48 329.51 197.59 287.22 197.59 235.05 C 197.59 182.88 240.48 140.59 293.38 140.59 C 346.27 140.59 389.16 182.88 389.16 235.05 Z M 85.57 32.00 L 137.19 32.00 C 137.19 32.00 186.86 42.20 188.80 89.42 C 190.75 136.63 188.80 235.05 188.80 235.05 C 188.80 235.05 186.60 336.42 293.38 340.26 L 345.61 340.26 C 345.61 340.26 395.28 337.38 398.20 391.17 L 398.20 436.31 C 398.20 436.31 398.20 485.30 344.63 487.22 C 291.07 489.14 161.53 487.22 161.53 487.22 C 161.53 487.22 33.95 479.54 32.97 357.55 C 32.00 235.57 32.97 89.42 32.97 89.42 C 32.97 89.42 35.89 38.79 85.57 32.00 Z M 325.18 487.71 L 370.93 488.08 L 415.73 488.08 C 539.43 488.12 547.21 360.43 547.21 360.43 C 547.21 360.43 550.14 228.84 547.21 179.86 C 544.29 130.87 493.65 127.03 493.65 127.03 L 447.87 127.03 C 447.87 127.03 399.18 130.87 398.20 178.90 L 397.23 226.92 L 384.04 265.61" />
-                </svg>
+                  <img src="symbole/nouveau-symbolekompress.webp" alt="KOMPRESS" width="650" height="1140" decoding="async" loading="eager">
                 </div>
                 <!-- LISERET / CARTOUCHE AU SURVOL (PUR FLOU SANS COULEUR OPAQUE) -->
                 <div class="mosaic-cartouche">
@@ -7953,7 +8159,7 @@
 
             <div class="proj-span-6 proj-col-stack proj-justify-between">
               <div class="proj-text-block">
-                <p class="proj-text-lead">Comment réintégrer le jeu dans notre quotidien grâce au mobilier modulable ? &mdash; Chaise Modèle 001 &bull; Safety Orange</p>
+                <p>Comment réintégrer le jeu dans notre quotidien grâce au mobilier modulable ? &mdash; Chaise Modèle 001 &bull; Safety Orange</p>
                 <p>Ce projet répond à un brief : s’inspirer d’une culture pour concevoir un produit. J’ai choisi celle des jeux de construction, comme les Lego ou les Kapla, qui permettent de créer librement et d’inventer son propre univers. Mon enquête révèle que huit personnes interrogées sur dix ressentaient cette liberté en jouant. Pourtant, la majorité a arrêté autour de 13 ans et évoque aujourd’hui le manque de temps et de matériel comme principaux freins. Ce constat m’a amené à l’hypothèse suivante : réintroduire le jeu de construction à l’âge adulte pourrait permettre de retrouver un espace de créativité, d’expression et de liberté au quotidien.</p>
                 <p>Le projet prend la forme d’une chaise modulable inspirée du principe des jeux de construction. Son assemblage simple invite l’utilisateur à participer à la création de son mobilier. Le geste de construire fait ainsi partie de l’expérience de l’objet : on assemble, on expérimente et on transforme.</p>
               </div>
@@ -7974,30 +8180,21 @@
 
           <!-- SECTION 3 : PROCESSUS & ATELIER (ÉCARTEMENT UNIFORME HORIZONTAL ET VERTICAL) -->
           <div class="proj-section">
-            <div class="proj-span-6 proj-item-with-caption">
+            <div class="proj-span-6">
               <div class="proj-media proj-ratio-4-3">
-                <img src="images/opt/img-03.webp" alt="Recherches de formes et croquis de conception" class="proj-img is-cover" loading="lazy" decoding="async" width="1242" height="1362">
-              </div>
-              <div class="proj-caption">
-                <p>Recherches de formes, exploration des principes d’assemblage et tracés préparatoires des gabarits modulaires.</p>
+                <img src="images/opt/img-03.webp" alt="Maquette d'atelier Fog Chair sur établi" class="proj-img is-cover" loading="lazy" decoding="async" width="1242" height="1362">
               </div>
             </div>
 
-            <div class="proj-span-6 proj-item-with-caption">
+            <div class="proj-span-6">
               <div class="proj-media proj-ratio-4-3">
                 <img src="images/opt/img-04.webp" alt="Conception Fog Chair - Étape 01 d'atelier, usinage et assemblage des profilés" class="proj-img is-cover" loading="lazy" decoding="async" width="1886" height="1375">
               </div>
-              <div class="proj-caption">
-                <p>Décomposition des étapes de prototypage physique : découpage initial des gabarits en mousse haute densité et confection des premiers modules tubulaires.</p>
-              </div>
             </div>
 
-            <div class="proj-span-6 proj-item-with-caption">
+            <div class="proj-span-6">
               <div class="proj-media proj-ratio-4-3">
                 <img src="images/opt/img-05.webp" alt="Conception Fog Chair - Étape 02 d'atelier, vissage et fixation des inserts mécaniques" class="proj-img is-cover" loading="lazy" decoding="async" width="1780" height="1324">
-              </div>
-              <div class="proj-caption">
-                <p>Assemblage mécanique en atelier : mise à l’épreuve du rayon de courbure des cylindres textiles et fixation des inserts d’ancrage.</p>
               </div>
             </div>
           </div>
@@ -8131,7 +8328,7 @@
           <div class="proj-section">
             <div class="proj-span-5 proj-align-center">
               <div class="proj-text-block">
-                <p class="proj-text-lead">Les festivals et les événements en plein air exigent des aménagements temporaires qui posent souvent un défi écologique et logistique majeur. Le transport, l'installation et le stockage du mobilier traditionnel génèrent une empreinte carbone importante et finissent parfois en déchets. Pour répondre à cette problématique, ce projet repense intégralement la conception de l'assise événementielle avec une approche radicale : un mobilier 100 % naturel, fabriqué sur place et conçu pour disparaître sans laisser de trace.</p>
+                <p>Les festivals et les événements en plein air exigent des aménagements temporaires qui posent souvent un défi écologique et logistique majeur. Le transport, l'installation et le stockage du mobilier traditionnel génèrent une empreinte carbone importante et finissent parfois en déchets. Pour répondre à cette problématique, ce projet repense intégralement la conception de l'assise événementielle avec une approche radicale : un mobilier 100 % naturel, fabriqué sur place et conçu pour disparaître sans laisser de trace.</p>
                 <p>Plutôt que d'importer des matériaux industriels, le projet s'appuie sur ce que la nature offre déjà. Le mobilier est constitué exclusivement de matières organiques brutes : de la terre, du chanvre et de la paille. Ces éléments sont assemblés et compressés à froid dans un moule spécialement conçu pour l'assise.</p>
               </div>
             </div>
@@ -8204,7 +8401,7 @@
           <div class="proj-section">
             <div class="proj-span-4 proj-align-end">
               <div class="proj-text-block">
-                <p class="proj-text-lead">Les immenses bâches publicitaires qui habillent nos bâtiments finissent souvent jetées une fois les campagnes terminées. Ce projet propose de leur offrir une seconde vie en les transformant en mobilier. L'idée repose sur un contraste fort : une structure profilée et sobre en aluminium sur laquelle vient se tendre un fragment de bâche recyclée. Confrontant la rigueur industrielle du métal à l'esthétique aléatoire et colorée de la publicité, chaque chaise devient une pièce unique.</p>
+                <p>Les immenses bâches publicitaires qui habillent nos bâtiments finissent souvent jetées une fois les campagnes terminées. Ce projet propose de leur offrir une seconde vie en les transformant en mobilier. L'idée repose sur un contraste fort : une structure profilée et sobre en aluminium sur laquelle vient se tendre un fragment de bâche recyclée. Confrontant la rigueur industrielle du métal à l'esthétique aléatoire et colorée de la publicité, chaque chaise devient une pièce unique.</p>
               </div>
             </div>
             <div class="proj-span-8 proj-align-end">
@@ -8433,7 +8630,7 @@
             </div>
             <div class="proj-span-5 proj-align-end">
               <div class="proj-text-block">
-                <p class="proj-text-lead">Ce projet de luminaire explore le réemploi industriel en transformant des chutes de rails de câblage électrique en une structure au design brut. L'aspect froid et fonctionnel du métal contraste avec la dimension intime et mémorielle dissimulée au cœur même de l'objet.</p>
+                <p>Ce projet de luminaire explore le réemploi industriel en transformant des chutes de rails de câblage électrique en une structure au design brut. L'aspect froid et fonctionnel du métal contraste avec la dimension intime et mémorielle dissimulée au cœur même de l'objet.</p>
                 <p>À l'intérieur de l'abat-jour, la lumière révèle une véritable page de journal, intégrée pour figer le temps et préserver la mémoire d'un événement historique majeur. La direction artistique repose sur cette idée forte : transformer un objet du quotidien en un sanctuaire pour nos souvenirs collectifs.</p>
               </div>
             </div>
@@ -8518,28 +8715,39 @@
       </nav>
 
       <div class="tonaj-about-stage">
-        <!-- BLOC VERT ÉLECTRIQUE (#1bff00) -->
-        <div class="tonaj-about-green-block" aria-hidden="true"></div>
-
-        <!-- MANIFESTE ÉDITORIAL (SUR LE VERT À GAUCHE) -->
+        <!-- ACCROCHE & MANIFESTE ÉDITORIAL (GAUCHE) -->
         <div class="tonaj-about-manifesto">
+          <p class="tonaj-about-lead" data-i18n="about_lead">Morgan Janot - Design industriel, mobilier et objets d'intérieur nés du réemploi de matériaux bruts et de la couleur.</p>
           <p data-i18n="about_p1">Je crois que la fin d'un usage peut être le début d'une création. Les chutes et les rebuts industriels portent encore des possibilités. Mon travail commence par cette attention à ce que l'on écarte : retrouver dans une matière ordinaire de quoi créer un objet qui compte.</p>
           <p data-i18n="about_p2">Je pense avec mes mains, ou bien en 3D. Assembler, détourner, tester : c'est au contact de volumes que mes idées prennent forme. L'imprévu participe au projet ; il m'amène vers des solutions que le dessin seul ne m'aurait pas permis d'imaginer.</p>
           <p data-i18n="about_p3">À la sobriété de l'industrie, j'associe l'énergie des couleurs saturées. Nourrie par les univers du manga, de l'animation et de la pop culture, je cherche des contrastes francs, capables de réveiller le quotidien. La couleur donne aux matières délaissées une présence qu'on ne peut plus ignorer.</p>
           <p data-i18n="about_p4">À travers le mobilier et les objets d'intérieur, je veux faire vivre les espaces, y introduire du jeu et susciter de l'attachement. Je défends un design qui fait avec ce qui existe, ose le transformer et donne envie de le garder.</p>
         </div>
 
-        <!-- TITRE MONUMENTAL ABOUT (DÉBORDANT ENTRE LE VERT ET LE BLANC) -->
+        <!-- TITRE MONUMENTAL ABOUT (BAS À GAUCHE) -->
         <div class="tonaj-about-giant-title-wrapper" aria-hidden="true">
           <span class="tonaj-about-giant-title">ABOUT</span>
         </div>
 
-        <!-- COLONNE DROITE : NOM, PHOTO ET PASSIONS -->
+        <!-- COLONNE DROITE : PORTRAIT N&B ET PASSIONS -->
         <div class="tonaj-about-right-col">
-          <h2 class="tonaj-about-name">Morgan Janot</h2>
-
           <div class="tonaj-about-photo-frame">
-            <img src="images/opt/img-38.webp" alt="Portrait de Morgan Janot" class="tonaj-about-photo" loading="lazy" decoding="async" width="1125" height="1274">
+            <img src="symbole/nouvellephotoportrait.webp" alt="Portrait de Morgan Janot" class="tonaj-about-photo" loading="eager" decoding="async" width="1200" height="1602">
+          </div>
+
+          <div class="tonaj-about-passions-block">
+            <h2 class="tonaj-about-subheading" data-i18n="about_passions">Mes passions</h2>
+            <p class="tonaj-about-passions-text" data-i18n="about_passions_text">Les jeux vidéo, les animes, le skate et la danse ne sont pas de simples passions ; ils constituent le socle de ma culture visuelle. Chacun de ces univers a profondément forgé ma vision du design et mon approche de la création.</p>
+          </div>
+        </div>
+
+        <!-- INFORMATIONS & LIENS (BAS À DROITE) -->
+        <div class="tonaj-about-info-block">
+          <h2 class="tonaj-about-info-heading" data-i18n="about_info">Informations</h2>
+          <div class="tonaj-about-social-links" aria-label="Réseaux et CV">
+            <a href="https://www.instagram.com/tonaj.work/" target="_blank" rel="noopener noreferrer" class="tonaj-social-link" title="@tonaj.work sur Instagram">IG</a>
+            <a href="https://linkedin.com/in/morgan-janot" target="_blank" rel="noopener noreferrer" class="tonaj-social-link">LIN</a>
+            <a href="symbole/cv-morgan-janot.pdf" target="_blank" rel="noopener noreferrer" class="tonaj-social-link" title="Télécharger le CV">CV</a>
           </div>
         </div>
       </div>
@@ -8552,8 +8760,7 @@
       <div class="tonaj-home-city">LYON</div>
     </section>
 
-    <!-- VIEW 3: CONTACT (ACCESSIBLE VIA ROULETTE WITH * CONTACT *) -->
-    <!-- VIEW 3: CONTACT (PAGE CONTACT RÉFÉRENCE GRAPHIQUE) -->
+    <!-- VIEW 3: CONTACT (PAGE CONTACT RÉFÉRENCE FOND BLANC) -->
     <section id="view-contact" class="view-panel tonaj-contact-view" aria-label="Contact Morgan Janot">
       <nav class="tonaj-home-nav" aria-label="Navigation principale">
         <a href="#home" class="tonaj-home-link link-tonaj" data-tonaj-nav="home">TONAJ</a>
@@ -8563,19 +8770,19 @@
       </nav>
 
       <div class="tonaj-contact-stage">
-        <!-- BLOC VERT ÉLECTRIQUE (#1bff00) ENGLOBANT LE FORMULAIRE -->
-        <div class="tonaj-contact-green-block">
+        <!-- FORMULAIRE ÉPURÉ FOND BLANC -->
+        <div class="tonaj-contact-form-panel">
           <form class="tonaj-contact-form" id="contact-form" action="mailto:morganjanot.design@gmail.com" method="POST" enctype="text/plain">
             <div class="tonaj-contact-form-col tonaj-contact-form-left">
-              <div class="tonaj-form-group">
+              <div class="tonaj-form-group tonaj-form-group-line">
                 <label for="contact-nom" class="tonaj-form-label" data-i18n="contact_form_nom">Nom</label>
                 <input type="text" id="contact-nom" name="nom" class="tonaj-form-input" autocomplete="family-name" required />
               </div>
-              <div class="tonaj-form-group">
+              <div class="tonaj-form-group tonaj-form-group-line">
                 <label for="contact-prenom" class="tonaj-form-label" data-i18n="contact_form_prenom">Prenom</label>
                 <input type="text" id="contact-prenom" name="prenom" class="tonaj-form-input" autocomplete="given-name" required />
               </div>
-              <div class="tonaj-form-group">
+              <div class="tonaj-form-group tonaj-form-group-line">
                 <label for="contact-email" class="tonaj-form-label" data-i18n="contact_form_email">Email</label>
                 <input type="email" id="contact-email" name="email" class="tonaj-form-input" autocomplete="email" required />
               </div>
@@ -8597,24 +8804,27 @@
           </form>
         </div>
 
-        <!-- COORDONNÉES EN GROS CARACTÈRES SANS-SERIF NOIRS (CHEVAUCHEMENT VERT/BLANC) -->
-        <a href="mailto:morganjanot.design@gmail.com" class="tonaj-contact-huge-link tonaj-contact-email" title="Envoyer un email">
-          morganjanot.design@gmail.com
-        </a>
-        <a href="tel:+33643350445" class="tonaj-contact-huge-link tonaj-contact-phone" title="Appeler le studio">
-          (+33) 6 43 35 04 45
-        </a>
+        <!-- COLONNE DROITE : COORDONNÉES & LIENS SOCIAUX -->
+        <div class="tonaj-contact-right-info">
+          <div class="tonaj-contact-direct-links">
+            <a href="mailto:morganjanot.design@gmail.com" class="tonaj-contact-direct-link tonaj-contact-email" title="Envoyer un email">
+              morganjanot.design@gmail.com
+            </a>
+            <a href="tel:+33643350445" class="tonaj-contact-direct-link tonaj-contact-phone" title="Appeler le studio">
+              (+33) 6 43 35 04 45
+            </a>
+          </div>
+
+          <div class="tonaj-contact-social-links" aria-label="Réseaux et CV">
+            <a href="https://www.instagram.com/tonaj.work/" target="_blank" rel="noopener noreferrer" class="tonaj-social-link" title="@tonaj.work sur Instagram">IG</a>
+            <a href="https://linkedin.com/in/morgan-janot" target="_blank" rel="noopener noreferrer" class="tonaj-social-link">LIN</a>
+            <a href="symbole/cv-morgan-janot.pdf" target="_blank" rel="noopener noreferrer" class="tonaj-social-link" title="Télécharger le CV">CV</a>
+          </div>
+        </div>
 
         <!-- TITRE MONUMENTAL SERIF 'CONTACT' -->
         <div class="tonaj-contact-giant-title-wrapper" aria-hidden="true">
           <span class="tonaj-contact-giant-title">CONTACT</span>
-        </div>
-
-        <!-- LIENS SOCIAUX / CV (IG, LIN, CV) -->
-        <div class="tonaj-contact-social-links" aria-label="Réseaux et CV">
-          <a href="https://www.instagram.com/tonaj.work/" target="_blank" rel="noopener noreferrer" class="tonaj-social-link" title="@tonaj.work sur Instagram">IG</a>
-          <a href="https://linkedin.com/in/morgan-janot" target="_blank" rel="noopener noreferrer" class="tonaj-social-link">LIN</a>
-          <a href="symbole/cv-morgan-janot.pdf" target="_blank" rel="noopener noreferrer" class="tonaj-social-link" title="Télécharger le CV">CV</a>
         </div>
       </div>
 
@@ -8928,10 +9138,36 @@
       const tonajHomePage = document.getElementById('tonaj-home-page');
       const tonajCenterBox = document.getElementById('tonaj-center-box');
       const tonajCenterBoxPath = tonajCenterBox ? tonajCenterBox.querySelector('svg path') : null;
+      const tonajLoadingDots = document.getElementById('tonaj-loading-dots');
       const portfolioSectionEl = document.querySelector('#view-portfolio .portfolio-section');
       const workHeadingEl = document.querySelector('#view-portfolio .tonaj-work-heading');
+      const workActiveDescEl = document.getElementById('tonaj-work-active-desc');
+      const carouselPrevArrowEl = document.getElementById('carousel-prev-btn');
+      const carouselNextArrowEl = document.getElementById('carousel-next-btn');
       let workMorphTimer = null;
       let workMorphRaf = null;
+      let homeLoadMinTimer = null;
+      let homeLoadCanceled = false;
+      let initialHomeLoadConsumed = false;
+      let homeLoadToken = 0;
+
+      function stopHomeLoadingVisual() {
+        if (tonajHomePage) {
+          tonajHomePage.classList.remove('is-loading');
+          tonajHomePage.removeAttribute('aria-busy');
+        }
+      }
+
+      function cancelHomeInitialLoader() {
+        homeLoadToken += 1;
+        homeLoadCanceled = true;
+        initialHomeLoadConsumed = true;
+        if (homeLoadMinTimer) {
+          clearTimeout(homeLoadMinTimer);
+          homeLoadMinTimer = null;
+        }
+        stopHomeLoadingVisual();
+      }
 
       function cancelWorkMorphTransition() {
         if (workMorphTimer) {
@@ -8943,10 +9179,12 @@
           workMorphRaf = null;
         }
         if (pageBody) {
-          pageBody.classList.remove('is-morphing-work');
+          pageBody.classList.remove('is-morphing-work', 'is-morphing-work-settled', 'is-returning-home');
         }
         if (tonajHomePage) {
           tonajHomePage.classList.remove('is-work-preview');
+          tonajHomePage.style.transition = '';
+          tonajHomePage.style.opacity = '';
         }
         if (tonajCenterBox) {
           tonajCenterBox.style.transition = '';
@@ -8963,8 +9201,14 @@
           tonajCenterBoxPath.style.transform = '';
           tonajCenterBoxPath.style.opacity = '';
         }
+        if (tonajLoadingDots) {
+          tonajLoadingDots.style.transition = '';
+          tonajLoadingDots.style.opacity = '';
+        }
         if (portfolioSectionEl) {
           portfolioSectionEl.style.transition = '';
+          portfolioSectionEl.style.removeProperty('transform');
+          portfolioSectionEl.style.opacity = '';
           portfolioSectionEl.style.clipPath = '';
           portfolioSectionEl.style.webkitClipPath = '';
         }
@@ -8974,9 +9218,22 @@
           workHeadingEl.style.opacity = '';
           workHeadingEl.style.clipPath = '';
         }
+        if (workActiveDescEl) {
+          workActiveDescEl.style.transition = '';
+          workActiveDescEl.style.transform = '';
+          workActiveDescEl.style.opacity = '';
+        }
+        if (carouselPrevArrowEl) {
+          carouselPrevArrowEl.style.transition = '';
+          carouselPrevArrowEl.style.opacity = '';
+        }
+        if (carouselNextArrowEl) {
+          carouselNextArrowEl.style.transition = '';
+          carouselNextArrowEl.style.opacity = '';
+        }
         document.querySelectorAll('#view-portfolio .frames-grid .project-card').forEach(function(card) {
           card.style.transition = '';
-          const illus = card.querySelector('.frame-illustration svg');
+          const illus = card.querySelector('.frame-illustration svg, .frame-illustration img');
           const cartouche = card.querySelector('.mosaic-cartouche');
           if (illus) {
             illus.style.transition = '';
@@ -8994,273 +9251,136 @@
         }
       }
 
-      // Liaison chorégraphiée : le rectangle central TONAJ s'étire et se déploie dans la bande horizontale des projets WORK
-      function playHomeToWorkMorph(logoRect) {
-        if (!tonajCenterBox || !portfolioSectionEl || !logoRect || logoRect.width <= 0) return;
+      // Transition : fondu doux sur le logo Tonaj qui charge + juste un roulement sur la roulette projet à l'arrivée
+      function playHomeToWorkMorph() {
+        if (!portfolioSectionEl) return;
 
         pageBody.classList.add('is-morphing-work');
         const gridEl = document.querySelector('#view-portfolio .frames-grid');
         if (gridEl) gridEl.scrollLeft = 0;
 
-        const stripRect = portfolioSectionEl.getBoundingClientRect();
-        if (!stripRect || stripRect.width <= 0) {
-          cancelWorkMorphTransition();
-          return;
+        // 1. Frame 0 : Tonaj + points restent nets à opacité 1 pendant que la roulette se prépare centrée en transparence
+        if (tonajCenterBox) {
+          tonajCenterBox.style.transition = 'none';
+          tonajCenterBox.style.opacity = '1';
+          tonajCenterBox.style.transform = 'translate(-50%, -50%) scale(1)';
+        }
+        if (tonajLoadingDots) {
+          tonajLoadingDots.style.transition = 'none';
+          tonajLoadingDots.style.opacity = '1';
         }
 
-        const topInset = Math.max(0, logoRect.top - stripRect.top);
-        const rightInset = Math.max(0, stripRect.right - logoRect.right);
-        const bottomInset = Math.max(0, stripRect.bottom - logoRect.bottom);
-        const leftInset = Math.max(0, logoRect.left - stripRect.left);
-        const logoCenterX = logoRect.left + logoRect.width / 2;
-
-        // 1. État initial exact (Frame 0) calé au pixel près sur le logo central TONAJ
-        tonajCenterBox.style.transition = 'none';
-        tonajCenterBox.style.left = logoRect.left + 'px';
-        tonajCenterBox.style.top = logoRect.top + 'px';
-        tonajCenterBox.style.width = logoRect.width + 'px';
-        tonajCenterBox.style.height = logoRect.height + 'px';
-        tonajCenterBox.style.aspectRatio = 'auto';
-        tonajCenterBox.style.transform = 'none';
-        tonajCenterBox.style.opacity = '1';
-
-        if (tonajCenterBoxPath) {
-          tonajCenterBoxPath.style.transition = 'none';
-          tonajCenterBoxPath.style.transform = 'scale(1)';
-          tonajCenterBoxPath.style.opacity = '1';
-        }
-
-        const startClip = `inset(${topInset.toFixed(1)}px ${rightInset.toFixed(1)}px ${bottomInset.toFixed(1)}px ${leftInset.toFixed(1)}px)`;
         portfolioSectionEl.style.transition = 'none';
-        portfolioSectionEl.style.clipPath = startClip;
-        portfolioSectionEl.style.webkitClipPath = startClip;
+        portfolioSectionEl.style.opacity = '0';
+        portfolioSectionEl.style.clipPath = '';
+        portfolioSectionEl.style.webkitClipPath = '';
+        portfolioSectionEl.style.removeProperty('transform');
+
+        if (workHeadingEl) {
+          workHeadingEl.style.transition = 'none';
+          workHeadingEl.style.transform = '';
+          workHeadingEl.style.opacity = '0';
+          workHeadingEl.style.clipPath = '';
+        }
+        if (workActiveDescEl) {
+          workActiveDescEl.style.transition = 'none';
+          workActiveDescEl.style.transform = '';
+          workActiveDescEl.style.opacity = '0';
+        }
+        if (carouselPrevArrowEl) {
+          carouselPrevArrowEl.style.transition = 'none';
+          carouselPrevArrowEl.style.opacity = '0';
+        }
+        if (carouselNextArrowEl) {
+          carouselNextArrowEl.style.transition = 'none';
+          carouselNextArrowEl.style.opacity = '0';
+        }
 
         if (typeof renderCarousel === 'function') {
           renderCarousel();
         }
 
-        const cards = Array.from(document.querySelectorAll('#view-portfolio .frames-grid .project-card'));
-        cards.forEach(function(card) {
-          const illus = card.querySelector('.frame-illustration svg');
-          const cartouche = card.querySelector('.mosaic-cartouche');
-          if (illus) {
-            illus.style.transition = 'none';
-            illus.style.transform = 'translate3d(0, 18px, 0) scale(0.88)';
-            illus.style.opacity = '0';
-          }
-          if (cartouche) {
-            cartouche.style.transition = 'none';
-            cartouche.style.transform = 'translate3d(0, 12px, 0)';
-            cartouche.style.opacity = '0';
-          }
-        });
-
-        if (workHeadingEl) {
-          workHeadingEl.style.transition = 'none';
-          workHeadingEl.style.transform = 'translate3d(0, 38%, 0)';
-          workHeadingEl.style.opacity = '0';
-          workHeadingEl.style.clipPath = 'inset(0 0 100% 0)';
-        }
-
-        // Forcer le reflow avant de lancer l'interpolation
+        // Forcer le reflow puis démarrer le roulement pur sur la roulette et le fondu sur Tonaj
         void portfolioSectionEl.offsetHeight;
 
         workMorphRaf = requestAnimationFrame(function() {
           workMorphRaf = null;
-          const morphEase = 'cubic-bezier(0.22, 1, 0.36, 1)';
-          const fanEase = 'cubic-bezier(0.19, 1, 0.22, 1)';
 
-          // Lancer le roulement fluide de la roulette dès le déploiement
+          // Roulement mécanique pur en arrivant sur la roulette projet
           if (typeof playRouletteArrivalRoll === 'function') {
-            playRouletteArrivalRoll(0);
+            playRouletteArrivalRoll(0, -3.5);
           }
 
-          // Le bloc vert TONAJ s'ouvre sur toute la largeur de la bande de projets puis fond dans les vignettes
-          tonajCenterBox.style.transition = [
-            `left 620ms ${morphEase}`,
-            `top 620ms ${morphEase}`,
-            `width 620ms ${morphEase}`,
-            `height 620ms ${morphEase}`,
-            `opacity 380ms cubic-bezier(0.4, 0, 0.2, 1) 150ms`
-          ].join(', ');
-          tonajCenterBox.style.left = stripRect.left + 'px';
-          tonajCenterBox.style.top = stripRect.top + 'px';
-          tonajCenterBox.style.width = stripRect.width + 'px';
-          tonajCenterBox.style.height = stripRect.height + 'px';
-          tonajCenterBox.style.opacity = '0';
-
-          if (tonajCenterBoxPath) {
-            tonajCenterBoxPath.style.transition = `transform 280ms ${morphEase}, opacity 210ms ease`;
-            tonajCenterBoxPath.style.transform = 'scale(0.88)';
-            tonajCenterBoxPath.style.opacity = '0';
+          // Fondu doux sur le logo Tonaj + 3 points qui chargent
+          if (tonajCenterBox) {
+            tonajCenterBox.style.transition = 'opacity 400ms ease';
+            tonajCenterBox.style.opacity = '0';
+          }
+          if (tonajLoadingDots) {
+            tonajLoadingDots.style.transition = 'opacity 360ms ease';
+            tonajLoadingDots.style.opacity = '0';
           }
 
-          // Ouverture synchronisée de la bande des projets depuis le rectangle central
-          portfolioSectionEl.style.transition = `clip-path 620ms ${morphEase}, -webkit-clip-path 620ms ${morphEase}`;
-          portfolioSectionEl.style.clipPath = 'inset(0px 0px 0px 0px)';
-          portfolioSectionEl.style.webkitClipPath = 'inset(0px 0px 0px 0px)';
-
-          // Révélation en éventail des visuels et cartouche centrale
-          cards.forEach(function(card, idx) {
-            const illus = card.querySelector('.frame-illustration svg');
-            const cartouche = card.querySelector('.mosaic-cartouche');
-            const innerDelay = 95 + Math.min(idx, 4) * 45;
-            if (illus) {
-              illus.style.transition = `transform 640ms ${morphEase} ${innerDelay}ms, opacity 420ms ease ${innerDelay}ms`;
-              illus.style.transform = 'translate3d(0, 0, 0) scale(1)';
-              illus.style.opacity = '1';
-            }
-            if (cartouche) {
-              if (card.classList.contains('is-carousel-center')) {
-                cartouche.style.transition = `transform 580ms ${morphEase} ${innerDelay + 40}ms, opacity 400ms ease ${innerDelay + 40}ms`;
-                cartouche.style.transform = 'translate3d(0, 0, 0)';
-                cartouche.style.opacity = '1';
-              } else {
-                cartouche.style.transition = '';
-                cartouche.style.transform = '';
-                cartouche.style.opacity = '';
-              }
-            }
-          });
+          // Apparition en fondu centrée de la roulette qui roule et de l'interface WORK
+          portfolioSectionEl.style.transition = 'opacity 440ms ease 120ms';
+          portfolioSectionEl.style.opacity = '1';
 
           if (workHeadingEl) {
-            workHeadingEl.style.transition = `transform 660ms ${morphEase} 130ms, opacity 480ms ease 130ms, clip-path 660ms ${morphEase} 130ms`;
-            workHeadingEl.style.transform = 'translate3d(0, 0, 0)';
+            workHeadingEl.style.transition = 'opacity 400ms ease 180ms';
             workHeadingEl.style.opacity = '1';
-            workHeadingEl.style.clipPath = 'inset(0 0 0% 0)';
+          }
+          if (workActiveDescEl) {
+            workActiveDescEl.style.transition = 'opacity 400ms ease 220ms';
+            workActiveDescEl.style.opacity = '1';
+          }
+          if (carouselPrevArrowEl) {
+            carouselPrevArrowEl.style.transition = 'opacity 360ms ease 260ms';
+            carouselPrevArrowEl.style.opacity = '';
+          }
+          if (carouselNextArrowEl) {
+            carouselNextArrowEl.style.transition = 'opacity 360ms ease 260ms';
+            carouselNextArrowEl.style.opacity = '';
           }
 
           workMorphTimer = setTimeout(function() {
+            stopHomeLoadingVisual();
             cancelWorkMorphTransition();
-          }, 840);
+          }, 640);
         });
       }
 
-      // Liaison inverse : la bande des projets WORK se replie dans le rectangle central TONAJ
-      function playWorkToHomeMorph(stripRect, onComplete) {
-        if (!tonajCenterBox || !portfolioSectionEl || !stripRect || stripRect.width <= 0) {
+      // Retour par fondu doux vers l'écran de chargement Tonaj (déclenché au clic sur TONAJ)
+      function playWorkToHomeMorph(onComplete) {
+        if (!tonajHomePage) {
           if (typeof onComplete === 'function') onComplete();
           return;
         }
 
-        pageBody.classList.add('is-morphing-work');
-        const logoRect = tonajCenterBox.getBoundingClientRect();
-        if (!logoRect || logoRect.width <= 0) {
-          cancelWorkMorphTransition();
-          if (typeof onComplete === 'function') onComplete();
-          return;
+        pageBody.classList.add('is-returning-home');
+
+        tonajHomePage.style.transition = 'none';
+        tonajHomePage.style.opacity = '0';
+        if (tonajCenterBox) {
+          tonajCenterBox.style.transition = 'none';
+          tonajCenterBox.style.opacity = '1';
+          tonajCenterBox.style.transform = 'translate(-50%, -50%) scale(1)';
+        }
+        if (tonajLoadingDots) {
+          tonajLoadingDots.style.transition = 'none';
+          tonajLoadingDots.style.opacity = '1';
         }
 
-        const topInset = Math.max(0, logoRect.top - stripRect.top);
-        const rightInset = Math.max(0, stripRect.right - logoRect.right);
-        const bottomInset = Math.max(0, stripRect.bottom - logoRect.bottom);
-        const leftInset = Math.max(0, logoRect.left - stripRect.left);
-        const logoCenterX = logoRect.left + logoRect.width / 2;
-
-        tonajCenterBox.style.transition = 'none';
-        tonajCenterBox.style.left = stripRect.left + 'px';
-        tonajCenterBox.style.top = stripRect.top + 'px';
-        tonajCenterBox.style.width = stripRect.width + 'px';
-        tonajCenterBox.style.height = stripRect.height + 'px';
-        tonajCenterBox.style.aspectRatio = 'auto';
-        tonajCenterBox.style.transform = 'none';
-        tonajCenterBox.style.opacity = '0';
-
-        if (tonajCenterBoxPath) {
-          tonajCenterBoxPath.style.transition = 'none';
-          tonajCenterBoxPath.style.transform = 'scale(0.88)';
-          tonajCenterBoxPath.style.opacity = '0';
-        }
-
-        portfolioSectionEl.style.transition = 'none';
-        portfolioSectionEl.style.clipPath = 'inset(0px 0px 0px 0px)';
-        portfolioSectionEl.style.webkitClipPath = 'inset(0px 0px 0px 0px)';
-
-        const cards = Array.from(document.querySelectorAll('#view-portfolio .frames-grid .project-card'));
-        cards.forEach(function(card) {
-          const illus = card.querySelector('.frame-illustration svg');
-          const cartouche = card.querySelector('.mosaic-cartouche');
-          if (illus) {
-            illus.style.transition = 'none';
-            illus.style.transform = 'translate3d(0, 0, 0) scale(1)';
-            illus.style.opacity = '1';
-          }
-          if (cartouche) {
-            if (card.classList.contains('is-carousel-center')) {
-              cartouche.style.transition = 'none';
-              cartouche.style.transform = 'translate3d(0, 0, 0)';
-              cartouche.style.opacity = '1';
-            } else {
-              cartouche.style.transition = 'none';
-              cartouche.style.transform = 'translate3d(0, 100%, 0)';
-              cartouche.style.opacity = '0';
-            }
-          }
-        });
-
-        if (workHeadingEl) {
-          workHeadingEl.style.transition = 'none';
-          workHeadingEl.style.transform = 'translate3d(0, 0, 0)';
-          workHeadingEl.style.opacity = '1';
-          workHeadingEl.style.clipPath = 'inset(0 0 0% 0)';
-        }
-
-        void portfolioSectionEl.offsetHeight;
+        void tonajHomePage.offsetHeight;
 
         workMorphRaf = requestAnimationFrame(function() {
           workMorphRaf = null;
-          const morphEase = 'cubic-bezier(0.22, 1, 0.36, 1)';
-          const targetClip = `inset(${topInset.toFixed(1)}px ${rightInset.toFixed(1)}px ${bottomInset.toFixed(1)}px ${leftInset.toFixed(1)}px)`;
-
-          portfolioSectionEl.style.transition = `clip-path 560ms ${morphEase}, -webkit-clip-path 560ms ${morphEase}`;
-          portfolioSectionEl.style.clipPath = targetClip;
-          portfolioSectionEl.style.webkitClipPath = targetClip;
-
-          cards.forEach(function(card) {
-            const illus = card.querySelector('.frame-illustration svg');
-            const cartouche = card.querySelector('.mosaic-cartouche');
-            if (illus) {
-              illus.style.transition = `transform 420ms ${morphEase}, opacity 320ms ease`;
-              illus.style.transform = 'translate3d(0, 18px, 0) scale(0.9)';
-              illus.style.opacity = '0';
-            }
-            if (cartouche) {
-              cartouche.style.transition = `transform 380ms ${morphEase}, opacity 280ms ease`;
-              cartouche.style.transform = 'translate3d(0, 12px, 0)';
-              cartouche.style.opacity = '0';
-            }
-          });
-
-          if (workHeadingEl) {
-            workHeadingEl.style.transition = `transform 420ms ${morphEase}, opacity 320ms ease, clip-path 420ms ${morphEase}`;
-            workHeadingEl.style.transform = 'translate3d(0, 34%, 0)';
-            workHeadingEl.style.opacity = '0';
-            workHeadingEl.style.clipPath = 'inset(0 0 100% 0)';
-          }
-
-          tonajCenterBox.style.transition = [
-            `left 560ms ${morphEase}`,
-            `top 560ms ${morphEase}`,
-            `width 560ms ${morphEase}`,
-            `height 560ms ${morphEase}`,
-            `opacity 340ms ease 110ms`
-          ].join(', ');
-          tonajCenterBox.style.left = logoRect.left + 'px';
-          tonajCenterBox.style.top = logoRect.top + 'px';
-          tonajCenterBox.style.width = logoRect.width + 'px';
-          tonajCenterBox.style.height = logoRect.height + 'px';
-          tonajCenterBox.style.opacity = '1';
-
-          if (tonajCenterBoxPath) {
-            tonajCenterBoxPath.style.transition = `transform 340ms ${morphEase} 210ms, opacity 280ms ease 210ms`;
-            tonajCenterBoxPath.style.transform = 'scale(1)';
-            tonajCenterBoxPath.style.opacity = '1';
-          }
+          tonajHomePage.style.transition = 'opacity 320ms ease';
+          tonajHomePage.style.opacity = '1';
 
           workMorphTimer = setTimeout(function() {
             cancelWorkMorphTransition();
             if (typeof onComplete === 'function') onComplete();
-          }, 590);
+          }, 340);
         });
       }
 
@@ -9277,7 +9397,7 @@
 
         const cards = Array.from(document.querySelectorAll('#view-portfolio .frames-grid .project-card'));
         cards.forEach(function(card) {
-          const illus = card.querySelector('.frame-illustration svg');
+          const illus = card.querySelector('.frame-illustration svg, .frame-illustration img');
           const cartouche = card.querySelector('.mosaic-cartouche');
           if (illus) {
             illus.style.transition = 'none';
@@ -9309,7 +9429,7 @@
 
           cards.forEach(function(card, idx) {
             const delay = Math.min(idx, 4) * 35;
-            const illus = card.querySelector('.frame-illustration svg');
+            const illus = card.querySelector('.frame-illustration svg, .frame-illustration img');
             const cartouche = card.querySelector('.mosaic-cartouche');
             if (illus) {
               illus.style.transition = `transform 540ms cubic-bezier(0.19, 1, 0.22, 1) ${delay}ms, opacity 380ms ease ${delay}ms`;
@@ -9375,14 +9495,13 @@
           return;
         }
 
-        // Mesurer le logo central avant de quitter la page d'accueil pour la liaison Home -> WORK
-        let savedLogoRect = null;
-        if (shouldAnimate && wasHomePage && targetKey === 'portfolio' && tonajCenterBox) {
+        // Transition douce Home -> WORK : fondu sur Tonaj + roulement pur sur la roulette
+        let animateHomeFadeToWork = false;
+        if (shouldAnimate && wasHomePage && targetKey === 'portfolio') {
           cancelWorkMorphTransition();
-          savedLogoRect = tonajCenterBox.getBoundingClientRect();
-        } else if (shouldAnimate && wasPortfolioPage && isHome && portfolioSectionEl) {
+          animateHomeFadeToWork = true;
+        } else if (shouldAnimate && !wasHomePage && isHome) {
           cancelWorkMorphTransition();
-          const currentStripRect = portfolioSectionEl.getBoundingClientRect();
           if (window.location.hash && window.location.hash !== '#home') {
             try {
               history.pushState(null, '', window.location.pathname + window.location.search);
@@ -9390,7 +9509,7 @@
               window.location.hash = '';
             }
           }
-          playWorkToHomeMorph(currentStripRect, function() {
+          playWorkToHomeMorph(function() {
             pageBody.classList.add('is-home-page');
             pageBody.classList.remove('view-is-portfolio', 'view-is-about', 'view-is-contact', 'is-project-page', 'is-scrolled');
             syncRootStateClasses();
@@ -9499,8 +9618,8 @@
           if (typeof renderCarousel === 'function') {
             renderCarousel();
           }
-          if (shouldAnimate && wasHomePage && savedLogoRect) {
-            playHomeToWorkMorph(savedLogoRect);
+          if (animateHomeFadeToWork) {
+            playHomeToWorkMorph();
           } else {
             if (typeof playRouletteArrivalRoll === 'function') {
               const returnIdx = wasProjectPage && currentActiveDescId ? CAROUSEL_PROJECT_IDS.indexOf(currentActiveDescId) : 0;
@@ -10737,7 +10856,7 @@
             revealPanel('portfolio', { animate: true });
             scrollToTopRoulette();
           } else {
-            revealPanel('home', { animate: true });
+            triggerTonajHomeReload();
           }
         });
       }
@@ -10772,9 +10891,10 @@
           e.preventDefault();
           const target = el.getAttribute('data-tonaj-nav') || 'portfolio';
           if (target === 'home') {
-            revealPanel('home', { animate: true });
+            triggerTonajHomeReload();
             return;
           }
+          cancelHomeInitialLoader();
           const idx = cycle.indexOf(target);
           activeIdx = idx !== -1 ? idx : 0;
           committedIdx = activeIdx;
@@ -10789,11 +10909,13 @@
       // =========================================================================
       const I18N = {
         fr: {
+          about_lead: "Morgan Janot - Design industriel, mobilier et objets d'intérieur nés du réemploi de matériaux bruts et de la couleur.",
           about_p1: "Je crois que la fin d'un usage peut être le début d'une création. Les chutes et les rebuts industriels portent encore des possibilités. Mon travail commence par cette attention à ce que l'on écarte : retrouver dans une matière ordinaire de quoi créer un objet qui compte.",
           about_p2: "Je pense avec mes mains, ou bien en 3D. Assembler, détourner, tester : c'est au contact de volumes que mes idées prennent forme. L'imprévu participe au projet ; il m'amène vers des solutions que le dessin seul ne m'aurait pas permis d'imaginer.",
           about_p3: "À la sobriété de l'industrie, j'associe l'énergie des couleurs saturées. Nourrie par les univers du manga, de l'animation et de la pop culture, je cherche des contrastes francs, capables de réveiller le quotidien. La couleur donne aux matières délaissées une présence qu'on ne peut plus ignorer.",
           about_p4: "À travers le mobilier et les objets d'intérieur, je veux faire vivre les espaces, y introduire du jeu et susciter de l'attachement. Je défends un design qui fait avec ce qui existe, ose le transformer et donne envie de le garder.",
           about_passions: "Mes passions",
+          about_passions_text: "Les jeux vidéo, les animes, le skate et la danse ne sont pas de simples passions ; ils constituent le socle de ma culture visuelle. Chacun de ces univers a profondément forgé ma vision du design et mon approche de la création.",
           about_info: "Informations",
           about_photo_alt: "Portrait de Morgan Janot",
 
@@ -10879,10 +11001,7 @@
               "Un même ensemble de pièces permet de composer trois configurations de chaise. Déclinable en plusieurs coloris, le projet s'adapte à tous les intérieurs contemporains.",
               "Comment réintégrer le jeu dans notre quotidien grâce au mobilier modulable ? &mdash; Chaise Modèle 001",
               "Ce projet répond à un brief : s’inspirer d’une culture pour concevoir un produit. J’ai choisi celle des jeux de construction : des formes géométriques simples, des couleurs franches et des silhouettes identifiables qui invitent à l'action.",
-              "Le projet prend la forme d’une chaise modulable inspirée du principe des jeux de construction. Son assemblage simple permet différentes configurations d'usage et s’adapte à la créativité de l’utilisateur. Pensée comme une pièce d’interaction, elle invite à manipuler, assembler et réinventer son mobilier.",
-              "Recherches de formes, exploration des principes d’assemblage et tracés préparatoires des gabarits modulaires.",
-              "Décomposition des étapes de prototypage physique : découpage initial des gabarits en mousse haute densité et confection des premiers modules tubulaires.",
-              "Assemblage mécanique en atelier : mise à l’épreuve du rayon de courbure des cylindres textiles et fixation des inserts d’ancrage."
+              "Le projet prend la forme d’une chaise modulable inspirée du principe des jeux de construction. Son assemblage simple permet différentes configurations d'usage et s’adapte à la créativité de l’utilisateur. Pensée comme une pièce d’interaction, elle invite à manipuler, assembler et réinventer son mobilier."
             ],
             'project-02': [
               "Inspiré du système d’assemblage USM Haller, ce projet transpose le principe de modularité au luminaire. Il repose sur un module à douze faces taraudées, permettant de visser les différents éléments pour composer la structure de la lampe. L’objet peut ainsi changer de configuration selon l’espace, les usages et les envies, en faisant évoluer sa hauteur, sa forme et la position de ses points lumineux.",
@@ -10917,11 +11036,13 @@
           }
         },
         en: {
+          about_lead: "Morgan Janot - Industrial design, furniture and interior objects born from reusing raw materials and color.",
           about_p1: "I believe that the end of a purpose can be the beginning of a creation. Industrial scraps and offcuts still hold possibilities. My work begins with paying attention to what gets discarded: finding within ordinary material the means to create an object that matters.",
           about_p2: "I think with my hands, or in 3D. Assembling, repurposing, experimenting: it is through contact with volumes that my ideas take shape. The unexpected becomes part of the project; it leads me toward solutions that drawing alone would never have allowed me to imagine.",
           about_p3: "To industrial restraint, I bring the energy of saturated colors. Fueled by the worlds of manga, animation, and pop culture, I seek sharp contrasts capable of enlivening everyday life. Color lends neglected materials a presence that can no longer be ignored.",
           about_p4: "Through furniture and interior objects, I aim to bring spaces to life, introducing playfulness and fostering attachment. I advocate for design that works with what already exists, dares to transform it, and makes you want to keep it.",
           about_passions: "Passions",
+          about_passions_text: "Video games, anime, skateboarding, and dance are not mere pastimes; they form the foundation of my visual culture. Each of these worlds has deeply shaped my vision of design and my creative approach.",
           about_info: "Information",
           about_photo_alt: "Portrait of Morgan Janot",
 
@@ -11007,10 +11128,7 @@
               "A single set of components allows for three chair configurations. Available in multiple colorways, the project adapts to any contemporary interior.",
               "How can we reintroduce play into our daily lives through modular furniture? &mdash; Chair Model 001",
               "This project answers a creative brief: draw inspiration from a culture to design a product. I chose the spirit of construction toys: simple geometries, frank saturated colors, and instantly recognizable silhouettes that spark engagement.",
-              "The piece takes the shape of a modular chair inspired by construction toys. Its simple assembly allows multiple usage configurations and adapts to the user's creativity. Conceived as an interactive piece, it invites you to manipulate, assemble, and reinvent your furniture.",
-              "Form explorations, assembly principles research, and preliminary drawings for modular templates.",
-              "Physical prototyping breakdown: initial cut of high-density foam templates and crafting of the first tubular modules.",
-              "Workshop mechanical assembly: testing the bend radius of textile cylinders and securing the anchor inserts."
+              "The piece takes the shape of a modular chair inspired by construction toys. Its simple assembly allows multiple usage configurations and adapts to the user's creativity. Conceived as an interactive piece, it invites you to manipulate, assemble, and reinvent your furniture."
             ],
             'project-02': [
               "Inspired by the USM Haller assembly system, this project transposes the principle of modularity to lighting. It centers on a custom twelve-faced tapped module, allowing different components to be screwed in to build the lamp's structure. The object can thus adapt its configuration to the space, needs, and desires, altering its height, form, and the position of its light sources.",
@@ -11275,6 +11393,7 @@
         const rawPath = (window.location.pathname || '').toLowerCase();
 
         if (rawHash.startsWith('project-') && panels[rawHash]) {
+          cancelHomeInitialLoader();
           showProjectDetail(rawHash);
           return;
         }
@@ -11299,6 +11418,8 @@
           return;
         }
 
+        cancelHomeInitialLoader();
+
         const wasProjectPage = pageBody && pageBody.classList.contains('is-project-page');
         const wasHomePage = pageBody && pageBody.classList.contains('is-home-page');
         const foundIdx = cycle.indexOf(targetRoute);
@@ -11321,10 +11442,126 @@
         introCurtain.remove();
       }
 
+      // Lancement du chargeur Tonaj (3 secondes + chargement complet) à l'arrivée ou lors d'un clic sur TONAJ
+      function runHomeLoadingSequence() {
+        homeLoadCanceled = false;
+        initialHomeLoadConsumed = true;
+        homeLoadToken += 1;
+        const myToken = homeLoadToken;
+
+        if (homeLoadMinTimer) {
+          clearTimeout(homeLoadMinTimer);
+          homeLoadMinTimer = null;
+        }
+
+        if (tonajHomePage) {
+          tonajHomePage.classList.add('is-loading');
+          tonajHomePage.setAttribute('aria-busy', 'true');
+        }
+
+        // Préchargement doux du contenu principal pendant la phase de chargement
+        if (typeof prefetchViewImages === 'function') {
+          prefetchViewImages('project-01', 4);
+          prefetchViewImages('project-02', 2);
+          prefetchViewImages('project-03', 2);
+          prefetchViewImages('about', 2);
+        }
+
+        const minDurationPromise = new Promise(function(resolve) {
+          homeLoadMinTimer = setTimeout(function() {
+            homeLoadMinTimer = null;
+            resolve();
+          }, 3000);
+        });
+
+        const domLoadedPromise = new Promise(function(resolve) {
+          if (document.readyState === 'complete') {
+            resolve();
+          } else {
+            window.addEventListener('load', resolve, { once: true });
+          }
+        });
+
+        const fontsReadyPromise = (document.fonts && document.fonts.ready)
+          ? Promise.race([
+              document.fonts.ready.catch(function() {}),
+              new Promise(function(resolve) { setTimeout(resolve, 2500); })
+            ])
+          : Promise.resolve();
+
+        const siteReadyPromise = Promise.race([
+          Promise.all([domLoadedPromise, fontsReadyPromise]),
+          new Promise(function(resolve) { setTimeout(resolve, 6500); })
+        ]);
+
+        Promise.all([minDurationPromise, siteReadyPromise]).then(function() {
+          if (homeLoadCanceled || myToken !== homeLoadToken) return;
+          if (!pageBody || !pageBody.classList.contains('is-home-page')) return;
+          activeIdx = 0;
+          committedIdx = 0;
+          if (typeof updateDrumLabels === 'function') {
+            updateDrumLabels();
+          }
+          revealPanel('portfolio', { animate: true });
+          if (typeof scrollToTopRoulette === 'function') {
+            scrollToTopRoulette();
+          }
+        });
+      }
+
+      function startHomeInitialLoader() {
+        if (initialHomeLoadConsumed || homeLoadCanceled) return;
+        runHomeLoadingSequence();
+      }
+
+      function triggerTonajHomeReload() {
+        const alreadyOnHome = Boolean(pageBody && pageBody.classList.contains('is-home-page'));
+
+        cancelHomeInitialLoader();
+        cancelWorkMorphTransition();
+        if (typeof cancelArrivalRoll === 'function') cancelArrivalRoll();
+        if (typeof stopPhysics === 'function') stopPhysics();
+
+        if (window.location.hash && window.location.hash !== '#home') {
+          try {
+            history.pushState(null, '', window.location.pathname + window.location.search);
+          } catch (err) {
+            window.location.hash = '';
+          }
+        }
+
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+
+        if (alreadyOnHome) {
+          runHomeLoadingSequence();
+          return;
+        }
+
+        const shouldAnimate = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+        if (shouldAnimate && tonajHomePage) {
+          tonajHomePage.classList.add('is-loading');
+          tonajHomePage.setAttribute('aria-busy', 'true');
+          playWorkToHomeMorph(function() {
+            revealPanel('home', { animate: false });
+            runHomeLoadingSequence();
+          });
+        } else {
+          revealPanel('home', { animate: false });
+          runHomeLoadingSequence();
+        }
+      }
+
       window.addEventListener('hashchange', handleHash);
       window.addEventListener('popstate', handleHash);
       handleHash();
       handleScroll();
+      if (pageBody && pageBody.classList.contains('is-home-page')) {
+        startHomeInitialLoader();
+      } else {
+        initialHomeLoadConsumed = true;
+      }
     
       // =========================================================================
       // GESTION DU THÈME CLAIR / SOMBRE (INVERSION NOIR & BLANC)

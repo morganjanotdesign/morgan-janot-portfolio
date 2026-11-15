@@ -2787,7 +2787,6 @@
     .tonaj-home-center-box:focus-visible,
     .tonaj-lang-btn:focus-visible,
     .project-card:focus-visible,
-    .tonaj-carousel-arrow:focus-visible,
     .tonaj-social-link:focus-visible,
     .tonaj-contact-huge-link:focus-visible,
     .tonaj-contact-direct-link:focus-visible,
@@ -7260,45 +7259,6 @@
       outline-offset: 4px !important;
     }
 
-    .tonaj-carousel-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 44px;
-      height: 44px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.78);
-      border: 1px solid rgba(0, 0, 0, 0.16);
-      color: #000000;
-      font-family: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
-      font-size: 20px;
-      font-weight: 600;
-      line-height: 1;
-      cursor: pointer;
-      z-index: 45;
-      opacity: 0.55;
-      transition: opacity 180ms ease, background-color 180ms ease, border-color 180ms ease;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .tonaj-carousel-arrow:hover,
-    .tonaj-carousel-arrow:focus-visible {
-      opacity: 1;
-      background: #1bff00;
-      border-color: #000000;
-    }
-
-    .tonaj-carousel-arrow--prev {
-      left: clamp(10px, 2.2vw, 28px);
-    }
-
-    .tonaj-carousel-arrow--next {
-      right: clamp(10px, 2.2vw, 28px);
-    }
-
     @media (max-width: 680px) {
       #view-portfolio .portfolio-section {
         --carousel-card-size: min(52vw, 210px, 29vh) !important;
@@ -7307,22 +7267,6 @@
         top: 35% !important;
         left: 50% !important;
         transform: translate(-50%, -50%) !important;
-      }
-
-      .tonaj-carousel-arrow {
-        top: 35%;
-        width: 36px;
-        height: 36px;
-        font-size: 16px;
-        opacity: 0.72;
-      }
-
-      .tonaj-carousel-arrow--prev {
-        left: 8px;
-      }
-
-      .tonaj-carousel-arrow--next {
-        right: 8px;
       }
 
       #view-portfolio .frames-grid .mosaic-cartouche {
@@ -7461,9 +7405,6 @@
       #view-portfolio .portfolio-section {
         --carousel-stage-w: min(58vw, calc(34vh * 501 / 166)) !important;
         --carousel-card-size: calc(var(--carousel-stage-w) * 166 / 501) !important;
-        top: 42% !important;
-      }
-      .tonaj-carousel-arrow {
         top: 42% !important;
       }
       .tonaj-work-heading {
@@ -8113,9 +8054,6 @@
           </div>
         </div>
       </section>
-
-      <button type="button" class="tonaj-carousel-arrow tonaj-carousel-arrow--prev" id="carousel-prev-btn" aria-label="Projet précédent">&#8249;</button>
-      <button type="button" class="tonaj-carousel-arrow tonaj-carousel-arrow--next" id="carousel-next-btn" aria-label="Projet suivant">&#8250;</button>
 
       <h1 class="tonaj-work-heading">WORK</h1>
 
@@ -9142,8 +9080,6 @@
       const portfolioSectionEl = document.querySelector('#view-portfolio .portfolio-section');
       const workHeadingEl = document.querySelector('#view-portfolio .tonaj-work-heading');
       const workActiveDescEl = document.getElementById('tonaj-work-active-desc');
-      const carouselPrevArrowEl = document.getElementById('carousel-prev-btn');
-      const carouselNextArrowEl = document.getElementById('carousel-next-btn');
       let workMorphTimer = null;
       let workMorphRaf = null;
       let homeLoadMinTimer = null;
@@ -9223,14 +9159,6 @@
           workActiveDescEl.style.transform = '';
           workActiveDescEl.style.opacity = '';
         }
-        if (carouselPrevArrowEl) {
-          carouselPrevArrowEl.style.transition = '';
-          carouselPrevArrowEl.style.opacity = '';
-        }
-        if (carouselNextArrowEl) {
-          carouselNextArrowEl.style.transition = '';
-          carouselNextArrowEl.style.opacity = '';
-        }
         document.querySelectorAll('#view-portfolio .frames-grid .project-card').forEach(function(card) {
           card.style.transition = '';
           const illus = card.querySelector('.frame-illustration svg, .frame-illustration img');
@@ -9287,14 +9215,6 @@
           workActiveDescEl.style.transform = '';
           workActiveDescEl.style.opacity = '0';
         }
-        if (carouselPrevArrowEl) {
-          carouselPrevArrowEl.style.transition = 'none';
-          carouselPrevArrowEl.style.opacity = '0';
-        }
-        if (carouselNextArrowEl) {
-          carouselNextArrowEl.style.transition = 'none';
-          carouselNextArrowEl.style.opacity = '0';
-        }
 
         if (typeof renderCarousel === 'function') {
           renderCarousel();
@@ -9332,14 +9252,6 @@
           if (workActiveDescEl) {
             workActiveDescEl.style.transition = 'opacity 400ms ease 220ms';
             workActiveDescEl.style.opacity = '1';
-          }
-          if (carouselPrevArrowEl) {
-            carouselPrevArrowEl.style.transition = 'opacity 360ms ease 260ms';
-            carouselPrevArrowEl.style.opacity = '';
-          }
-          if (carouselNextArrowEl) {
-            carouselNextArrowEl.style.transition = 'opacity 360ms ease 260ms';
-            carouselNextArrowEl.style.opacity = '';
           }
 
           workMorphTimer = setTimeout(function() {
@@ -10632,24 +10544,6 @@
           if (isDragging) {
             handlePointerEnd();
           }
-        });
-      }
-
-      // Boutons Précédent / Suivant accessibles (souris, tactile, lecteur d'écran)
-      const prevArrowBtn = document.getElementById('carousel-prev-btn');
-      const nextArrowBtn = document.getElementById('carousel-next-btn');
-      if (prevArrowBtn) {
-        prevArrowBtn.addEventListener('click', function() {
-          cancelArrivalRoll();
-          carouselTargetProgress = Math.round(carouselTargetProgress) - 1;
-          startPhysics();
-        });
-      }
-      if (nextArrowBtn) {
-        nextArrowBtn.addEventListener('click', function() {
-          cancelArrivalRoll();
-          carouselTargetProgress = Math.round(carouselTargetProgress) + 1;
-          startPhysics();
         });
       }
 

@@ -4136,15 +4136,16 @@
     }
     .project-detail-section img {
       transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.6s ease !important;
-      will-change: transform;
     }
-    .white-image-box:hover img,
-    .full-screen-image-block:hover img,
-    .leo-native-wrap:hover img,
-    .photo-with-side-text:hover img,
-    .gallery-spaced-pair:hover img,
-    .project-detail-section img:hover {
-      transform: scale(1.035) !important;
+    @media (hover: hover) and (pointer: fine) {
+      .white-image-box:hover img,
+      .full-screen-image-block:hover img,
+      .leo-native-wrap:hover img,
+      .photo-with-side-text:hover img,
+      .gallery-spaced-pair:hover img,
+      .project-detail-section img:hover {
+        transform: scale(1.035) !important;
+      }
     }
     @media (max-width: 860px) {
       .gallery-spaced-pair.photo-with-side-text {
@@ -6071,6 +6072,7 @@
     }
 
     .proj-ratio-auto {
+      display: block;
       height: auto;
     }
 
@@ -6136,14 +6138,14 @@
       height: 100%;
       display: block;
       transition: transform 0.55s cubic-bezier(0.25, 1, 0.5, 1) !important;
-      will-change: transform;
       border-radius: 0 !important;
       box-shadow: none !important;
       filter: none !important;
     }
 
     .proj-ratio-auto .proj-img {
-      height: auto;
+      width: 100%;
+      height: auto !important;
     }
 
     .proj-img.is-contain {
@@ -6154,8 +6156,10 @@
       object-fit: cover !important;
     }
 
-    .proj-media:hover .proj-img {
-      transform: scale(1.02) !important;
+    @media (hover: hover) and (pointer: fine) {
+      .proj-media:hover .proj-img {
+        transform: scale(1.02) !important;
+      }
     }
 
     /* Rangée de 3 images (Triptyque) calculée avec --proj-gap pour aligner les bords extérieurs */
@@ -7581,6 +7585,13 @@
         aspect-ratio: 4 / 3 !important;
       }
 
+      .project-detail-section .proj-img {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        will-change: auto !important;
+      }
+
       .proj-footer-bar {
         flex-direction: column !important;
         align-items: flex-start !important;
@@ -8132,13 +8143,13 @@
 
             <div class="proj-span-6">
               <div class="proj-media proj-ratio-5-4">
-                <img src="images/opt/img-04.webp" alt="Conception Fog Chair - Étape 01 d'atelier, usinage et assemblage des profilés" class="proj-img is-cover" loading="lazy" decoding="async" width="1886" height="1375">
+                <img src="images/project-01/newma.webp" alt="Conception Fog Chair - Étape 01 d'atelier, usinage et assemblage des profilés" class="proj-img is-cover" loading="lazy" decoding="async" width="1794" height="1288">
               </div>
             </div>
 
             <div class="proj-span-6">
               <div class="proj-media proj-ratio-5-4">
-                <img src="images/opt/img-05.webp" alt="Conception Fog Chair - Étape 02 d'atelier, vissage et fixation des inserts mécaniques" class="proj-img is-cover" loading="lazy" decoding="async" width="1780" height="1324">
+                <img src="images/project-01/newmb.webp" alt="Conception Fog Chair - Étape 02 d'atelier, vissage et fixation des inserts mécaniques" class="proj-img is-cover" loading="lazy" decoding="async" width="1780" height="1324">
               </div>
             </div>
 
@@ -8575,7 +8586,7 @@
           <div class="proj-section">
             <div class="proj-span-7">
               <div class="proj-media proj-ratio-auto">
-                <img src="images/opt/img-30.webp" alt="LEO-11 - Vue perspective en élévation" class="proj-img is-contain" loading="lazy" decoding="async" width="700" height="1080">
+                <img src="images/opt/img-30.webp" alt="LEO-11 - Vue perspective en élévation" class="proj-img is-contain" loading="eager" decoding="sync" width="700" height="1080">
               </div>
             </div>
             <div class="proj-span-5 proj-align-end">
@@ -8590,7 +8601,7 @@
           <div class="proj-section">
             <div class="proj-span-12">
               <div class="proj-media proj-ratio-16-9">
-                <img src="images/opt/img-31.webp" alt="LEO-11 - Mise en situation in situ salon" class="proj-img is-cover" loading="lazy" decoding="async" width="1920" height="1080">
+                <img src="images/opt/img-31.webp" alt="LEO-11 - Mise en situation in situ salon" class="proj-img is-cover" loading="eager" decoding="sync" width="1920" height="1080">
               </div>
             </div>
           </div>
@@ -8604,7 +8615,7 @@
             </div>
             <div class="proj-span-7">
               <div class="proj-media proj-ratio-cad">
-                <img src="images/opt/img-32.webp" alt="LEO-11 - Modélisation 3D et recherche formelle" class="proj-img is-cover" loading="lazy" decoding="async" width="980" height="682">
+                <img src="images/opt/img-32.webp" alt="LEO-11 - Modélisation 3D et recherche formelle" class="proj-img is-cover" loading="eager" decoding="sync" width="980" height="682">
               </div>
             </div>
           </div>
@@ -8613,24 +8624,24 @@
           <div class="proj-section">
             <div class="proj-span-12 proj-triptych-row">
               <div class="proj-media proj-ratio-triptych-left">
-                <img src="images/opt/img-33.webp" alt="LEO-11 - Structure brute en atelier sur tapis de découpe" class="proj-img is-cover" loading="lazy" decoding="async" width="1200" height="1600">
+                <img src="images/opt/img-33.webp" alt="LEO-11 - Structure brute en atelier sur tapis de découpe" class="proj-img is-cover" loading="eager" decoding="sync" width="1200" height="1600">
               </div>
               <div class="proj-media proj-ratio-4-3">
-                <img src="images/opt/img-34.webp" alt="LEO-11 - Test d'éclairage zénithal" class="proj-img is-cover" loading="lazy" decoding="async" width="1600" height="1200">
+                <img src="images/opt/img-34.webp" alt="LEO-11 - Test d'éclairage zénithal" class="proj-img is-cover" loading="eager" decoding="sync" width="1600" height="1200">
               </div>
               <div class="proj-media proj-ratio-4-3">
-                <img src="images/opt/img-35.webp" alt="LEO-11 - Diffusion lumineuse sur établi d'atelier" class="proj-img is-cover" loading="lazy" decoding="async" width="1600" height="1200">
+                <img src="images/opt/img-35.webp" alt="LEO-11 - Diffusion lumineuse sur établi d'atelier" class="proj-img is-cover" loading="eager" decoding="sync" width="1600" height="1200">
               </div>
             </div>
 
             <div class="proj-span-6">
               <div class="proj-media proj-ratio-3-4">
-                <img src="images/opt/img-36.webp" alt="LEO-11 - Ambiance nocturne sur table ronde en bois" class="proj-img is-cover" loading="lazy" decoding="async" width="1200" height="1600">
+                <img src="images/opt/img-36.webp" alt="LEO-11 - Ambiance nocturne sur table ronde en bois" class="proj-img is-cover" loading="eager" decoding="sync" width="1200" height="1600">
               </div>
             </div>
             <div class="proj-span-6">
               <div class="proj-media proj-ratio-3-4">
-                <img src="images/opt/img-37.webp" alt="LEO-11 - Éclairage tamisé et réflexion contre mur de briques" class="proj-img is-cover" loading="lazy" decoding="async" width="1200" height="1600">
+                <img src="images/opt/img-37.webp" alt="LEO-11 - Éclairage tamisé et réflexion contre mur de briques" class="proj-img is-cover" loading="eager" decoding="sync" width="1200" height="1600">
               </div>
             </div>
           </div>
@@ -9521,6 +9532,13 @@
           activePanel.style.display = 'block';
           activePanel.offsetHeight; // force reflow for smooth fade
           activePanel.classList.add('is-active');
+          if (typeof prefetchViewImages === 'function') {
+            prefetchViewImages(targetKey);
+          }
+          activePanel.querySelectorAll('img[loading="lazy"]').forEach(function(im) {
+            im.setAttribute('loading', 'eager');
+            im.decoding = 'sync';
+          });
         }
 
         if (window.location.hash !== '#' + targetKey) {
@@ -10677,19 +10695,20 @@
         for (let i = 0; i < limit; i++) {
           const img = imgs[i];
           img.setAttribute('loading', 'eager');
+          img.decoding = 'sync';
           const src = img.getAttribute('src');
           if (src) {
             const preload = new Image();
-            preload.decoding = 'async';
+            preload.decoding = 'sync';
             preload.src = src;
           }
         }
       }
 
       // Prefetch all images of a panel as soon as the user navigates to it
-      document.querySelectorAll('[data-tonaj-nav], .project-card[data-project-id], .btn-switch-project[data-target-project]').forEach(function(el) {
+      document.querySelectorAll('[data-tonaj-nav], .project-card[id], .project-card[data-project-id], [data-project-id], .btn-switch-project[data-target-project]').forEach(function(el) {
         const triggerPrefetch = function() {
-          const target = el.getAttribute('data-project-id') || el.getAttribute('data-target-project') || el.getAttribute('data-tonaj-nav');
+          const target = el.getAttribute('data-project-id') || el.getAttribute('data-target-project') || el.getAttribute('data-tonaj-nav') || (el.classList.contains('project-card') ? el.id : '');
           if (target && target !== 'home' && target !== 'portfolio') {
             prefetchViewImages(target, 4);
           }
@@ -10697,7 +10716,7 @@
         el.addEventListener('mouseenter', triggerPrefetch, { passive: true });
         el.addEventListener('touchstart', triggerPrefetch, { passive: true });
         el.addEventListener('click', function() {
-          const target = el.getAttribute('data-project-id') || el.getAttribute('data-target-project') || el.getAttribute('data-tonaj-nav');
+          const target = el.getAttribute('data-project-id') || el.getAttribute('data-target-project') || el.getAttribute('data-tonaj-nav') || (el.classList.contains('project-card') ? el.id : '');
           if (target && target !== 'home' && target !== 'portfolio') {
             prefetchViewImages(target);
           }
